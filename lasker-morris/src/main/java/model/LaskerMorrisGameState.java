@@ -1,5 +1,6 @@
 package model;
 
+import java.lang.Math;
 /**
  * Represents a board state of the Lasker Morris Game.
  * Contains most of the functionality of the game, including
@@ -101,6 +102,7 @@ public class LaskerMorrisGameState {
 
         return newState;
     }
+
 
     /**
      * Sets a stone in the specified position, according to the player's turn.
@@ -317,7 +319,8 @@ public class LaskerMorrisGameState {
      * @return an estimated value of the current state.
      */
     public int estimatedValue() {
-        //TODO Implement this method
+        if (this.whiteWins()) return 1000;
+        if (this.blackWins()) return -1000;
         return 0;
     }
 
@@ -447,5 +450,4 @@ public class LaskerMorrisGameState {
         }
         return numAdjacencies;
     }
-
 }

@@ -258,7 +258,7 @@ public class LaskerMorrisBoard {
         mills.get(18).add(new Integer[] {3,10,18});
         mills.get(18).add(new Integer[] {18,19,20});
 
-        mills.get(19).add(new Integer[] {13,16,19});
+        mills.get(19).add(new Integer[] {16,19,22});
         mills.get(19).add(new Integer[] {18,19,20});
 
         mills.get(20).add(new Integer[] {5,13,20});

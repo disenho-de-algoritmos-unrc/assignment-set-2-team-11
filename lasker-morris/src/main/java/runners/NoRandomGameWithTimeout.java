@@ -48,7 +48,6 @@ public class NoRandomGameWithTimeout {
                 // Got timeout.
             }
             LaskerMorrisGameState result = ThreadedNoRandomEngine.result;
-
             if (result == null) {
                 error = true;
             }
