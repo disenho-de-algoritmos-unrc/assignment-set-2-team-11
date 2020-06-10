@@ -1,6 +1,9 @@
 package model;
 
 import java.lang.Math;
+import java.util.List;
+import java.util.Arrays;
+
 /**
  * Represents a board state of the Lasker Morris Game.
  * Contains most of the functionality of the game, including
@@ -43,6 +46,9 @@ public class LaskerMorrisGameState {
      * have to be put in the board
      */
     private int remainingBlackStones = LaskerMorrisBoard.MAXSTONES;
+
+    
+    private boolean closedMill = false;
 
     /**
      * Represents the state of the board. Each position of the array 
@@ -174,6 +180,7 @@ public class LaskerMorrisGameState {
         result += "Turn: " + (isWhitesTurn() ? "Whites play" : "Blacks play") + "\n";
         result += "White stones remaining: " + this.remainingWhiteStones + "\n";
         result += "Black stones remaining: " + this.remainingBlackStones + "\n"; 
+        result += "Mill was closed: " + this.closedMill + "\n";
         result += boardToString();
         return result;
     }
@@ -236,6 +243,10 @@ public class LaskerMorrisGameState {
      */
     public void setWhitesTurn(boolean whitesTurn) {
         this.whitePlays = whitesTurn;		
+    }
+
+    public void setClosedMill(boolean closeMill){
+        this.closedMill = closeMill;
     }
 
     /**
@@ -319,10 +330,240 @@ public class LaskerMorrisGameState {
      * @return an estimated value of the current state.
      */
     public int estimatedValue() {
-        if (this.whiteWins()) return 1000;
-        if (this.blackWins()) return -1000;
-        return 0;
+        if (this.whiteWins()) return 1;
+        if (this.blackWins()) return -1;
+        
+        boolean phase2 = (this.whitePlays && this.numberOfWhiteStonesOnBoard() == 3 && this.remainingWhiteStones == 0) || (!this.whitePlays && this.numberOfBlackStonesOnBoard() == 3 && this.remainingBlackStones == 0);
+
+        if(  !phase2 ){
+            return (16 * this.closedMills()) + (37 * this.numberOfMills()) + (5 * this.blockedAdversaryStones()) + (10 * this.numberOfStones()) + (10 * this.twoStonesConfiguration()) + (7 * this.threeStonesConfiguration()) + (8 * this.doubleMills()) + (1086 * this.winningConfiguration()); 
+        }
+        else {
+            return (16 * this.closedMills()) + (10 * this.twoStonesConfiguration()) + (1 * this.threeStonesConfiguration()) + (1190 * this.winningConfiguration());
+        }
+
     }
+
+
+    public int numberOfMills (){
+        LaskerMorrisGameState clon = this.clone();
+        int whiteMills = 0;
+        int blackMills = 0;
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS ; i ++) {
+            if( clon.board[i]  == WHITE && clon.isInMill(i)  ){
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+                for (int j = 0; j < mills.size() ; j++) {
+                    Integer[] mill = mills.get(j);
+                    if (clon.board[mill[0]] == WHITE && clon.board[mill[1]] == WHITE  && clon.board[mill[2]] == WHITE ) {
+                        whiteMills++;
+                    }
+                }
+                clon.removeStone(i);
+            }
+            else if (clon.board[i]  == BLACK && clon.isInMill(i)){
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+                for (int j = 0; j < mills.size() ; j++) {
+                    Integer[] mill = mills.get(j);
+                    if (clon.board[mill[0]] == BLACK && clon.board[mill[1]] == BLACK  && clon.board[mill[2]] == BLACK ) {
+                        blackMills++;
+                    }
+                }
+                clon.removeStone(i);;
+            }
+        }
+
+        if (this.whitePlays){
+            return whiteMills-blackMills;
+        }
+        else {
+            return blackMills-whiteMills;
+        }
+    }
+
+
+    public int closedMills (){
+        if (this.closedMill ) {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    public int blockedAdversaryStones(){
+        int blockedWhiteStones = 0;
+        int blockedBlackStones = 0;
+
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS ; i++ ) {
+            if (this.board[i] == WHITE && this.getNumberOfFreeAdjacent(i) == 0 ) {
+                blockedWhiteStones++;
+            }
+            else if(this.board[i] == BLACK && this.getNumberOfFreeAdjacent(i) == 0){
+                blockedBlackStones++;
+            }
+        }
+        if (this.whitePlays){
+            return blockedBlackStones - blockedWhiteStones;
+        }
+        else {
+            return blockedWhiteStones - blockedBlackStones;
+        }
+    }
+
+    public int numberOfStones(){
+        if (this.whitePlays){
+            return this.numberOfWhiteStonesOnBoard() - this.numberOfBlackStonesOnBoard();
+        }
+        else {
+            return this.numberOfBlackStonesOnBoard() -  this.numberOfWhiteStonesOnBoard();
+        }
+    }
+
+    public int twoStonesConfiguration(){
+        LaskerMorrisGameState clon = this.clone();
+        int whiteTwoStones = 0;
+        int blackTwoStones = 0;
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS ; i ++) {
+            if( clon.board[i]  == WHITE && !clon.isInMill(i)  ){
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+                for (int j = 0; j < mills.size() ; j++) {
+                    Integer[] mill = mills.get(j);
+                    if ((clon.board[mill[0]] == WHITE && clon.board[mill[1]] == WHITE  && clon.board[mill[2]] == EMPTY) ||
+                        (clon.board[mill[0]] == WHITE && clon.board[mill[1]] == EMPTY  && clon.board[mill[2]] == WHITE) ||
+                        (clon.board[mill[0]] == EMPTY && clon.board[mill[1]] == WHITE  && clon.board[mill[2]] == WHITE)){
+                        whiteTwoStones++;
+                    }
+                }
+                clon.removeStone(i);
+            }
+            else if (clon.board[i]  == BLACK && !clon.isInMill(i)){
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+                for (int j = 0; j < mills.size() ; j++) {
+                    Integer[] mill = mills.get(j);
+                    if ((clon.board[mill[0]] == BLACK && clon.board[mill[1]] == BLACK  && clon.board[mill[2]] == EMPTY) ||
+                        (clon.board[mill[0]] == BLACK && clon.board[mill[1]] == EMPTY  && clon.board[mill[2]] == BLACK) ||
+                        (clon.board[mill[0]] == EMPTY && clon.board[mill[1]] == BLACK  && clon.board[mill[2]] == BLACK)){
+                        blackTwoStones++;
+                    }
+                }
+                clon.removeStone(i);;
+            }
+        }
+
+        if (this.whitePlays){
+            return whiteTwoStones-blackTwoStones;
+        }
+        else {
+            return blackTwoStones-whiteTwoStones;
+        }
+    }
+
+    public int threeStonesConfiguration(){
+        LaskerMorrisGameState clon = this.clone();
+        int whiteTwoStones = 0;
+        int blackTwoStones = 0;
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS ; i ++) {
+            if( clon.board[i]  == WHITE && !clon.isInMill(i)  ){
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+                int twoStones = 0;
+                for (int j = 0; j < mills.size() ; j++) {
+                    Integer[] mill = mills.get(j);
+                    if ((clon.board[mill[0]] == WHITE && clon.board[mill[1]] == WHITE  && clon.board[mill[2]] == EMPTY) ||
+                        (clon.board[mill[0]] == WHITE && clon.board[mill[1]] == EMPTY  && clon.board[mill[2]] == WHITE) ||
+                        (clon.board[mill[0]] == EMPTY && clon.board[mill[1]] == WHITE  && clon.board[mill[2]] == WHITE)){
+                        twoStones = twoStones + 1 ;
+                    }
+                if (twoStones == 2) {
+                    whiteTwoStones++;
+                    //clon.removeStone(i);
+                }
+                }
+            }
+            else if (clon.board[i]  == BLACK && !clon.isInMill(i)){
+                int cantidad = 0;
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+                for (int j = 0; j < mills.size() ; j++) {
+                    Integer[] mill = mills.get(j);
+                    if ((clon.board[mill[0]] == BLACK && clon.board[mill[1]] == BLACK  && clon.board[mill[2]] == EMPTY) ||
+                        (clon.board[mill[0]] == BLACK && clon.board[mill[1]] == EMPTY  && clon.board[mill[2]] == BLACK) ||
+                        (clon.board[mill[0]] == EMPTY && clon.board[mill[1]] == BLACK  && clon.board[mill[2]] == BLACK)){
+                        cantidad = cantidad + 1 ;
+                    }
+                }
+                if (cantidad == 2) {
+                    blackTwoStones++;    
+                    //clon.removeStone(i);;
+                }
+            }
+        }
+
+        if (this.whitePlays){
+            return whiteTwoStones-blackTwoStones;
+        }
+        else {
+            return blackTwoStones-whiteTwoStones;
+        }
+    }
+
+    public int doubleMills(){
+        LaskerMorrisGameState clon = this.clone();
+        int whiteMills = 0;
+        int blackMills = 0;
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS ; i ++) {
+            if( clon.board[i]  == WHITE && clon.isInMill(i)  ){
+                int cantidad = 0;
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+                for (int j = 0; j < mills.size() ; j++) {
+                    Integer[] mill = mills.get(j);
+                    if (clon.board[mill[0]] == WHITE && clon.board[mill[1]] == WHITE  && clon.board[mill[2]] == WHITE ) {
+                        cantidad++;
+                    }
+                }
+                if (cantidad == 2) {
+                    whiteMills++;
+                }
+            }
+            else if (clon.board[i]  == BLACK && clon.isInMill(i)){
+                int cantidad = 0;
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+                for (int j = 0; j < mills.size() ; j++) {
+                    Integer[] mill = mills.get(j);
+                    if (clon.board[mill[0]] == BLACK && clon.board[mill[1]] == BLACK  && clon.board[mill[2]] == BLACK ) {
+                        cantidad++;
+                    }
+                }
+                if (cantidad == 2) {
+                    blackMills++;
+                }
+            }
+        }
+
+        if (this.whitePlays){
+            return whiteMills-blackMills;
+        }
+        else {
+            return blackMills-whiteMills;
+        }
+    }
+
+    public int winningConfiguration(){
+        if (this.whiteWins() && this.whitePlays){
+            return 1;
+        }
+        else if (this.whitePlays && this.blackWins()) {
+            return -1;
+        }
+        else if (!this.whitePlays && this.blackWins()) {
+            return 1;
+        }
+        else if(!this.whitePlays && this.whiteWins() ){
+            return -1;
+        }
+        else {
+            return 0;
+        }
+    }
+
 
     /**
      * Computes number of free positions adjacent to white positions.

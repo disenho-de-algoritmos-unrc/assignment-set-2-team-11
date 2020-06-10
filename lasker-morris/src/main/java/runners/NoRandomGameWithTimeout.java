@@ -2,6 +2,8 @@ package runners;
 
 
 import java.util.concurrent.TimeUnit;
+import java.util.LinkedList;
+import engines.NoRandomEngine;
 
 import ThreadingUtils.TimeLimitedCodeBlock;
 import engines.ThreadedNoRandomEngine;
@@ -32,7 +34,6 @@ public class NoRandomGameWithTimeout {
 	public static void main(String[] args) {
 
 		LaskerMorrisGameState state = new LaskerMorrisGameState();
-		
 		System.out.println(state.toString());
 		
 		int moves = 0;
