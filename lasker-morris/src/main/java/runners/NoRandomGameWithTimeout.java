@@ -32,10 +32,12 @@ public class NoRandomGameWithTimeout {
 	 * Game is considered a draw if MAXMOVES total moves are reached without a winner.
 	 */
 	public static void main(String[] args) {
-
 		LaskerMorrisGameState state = new LaskerMorrisGameState();
-		System.out.println(state.toString());
-		
+
+		System.out.println(state);
+
+
+
 		int moves = 0;
 		
 		boolean error = false;

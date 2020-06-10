@@ -98,16 +98,27 @@ public class NoRandomEngine implements GameEngine {
         return result;
     }
 
-    private static int miniMax(LaskerMorrisGameState e, int maxDepth, int alpha, int beta) {
+    public static int miniMax(LaskerMorrisGameState e, int maxDepth, int alpha, int beta) {
+        //System.out.println("DADA ESTA JUGADA");
+        //System.out.println(e);
         if ( e.isFinal() || maxDepth == 0) {
             if (e.whiteWins()) return 1;
             if (e.blackWins()) return -1;
+            //System.out.println(e);           
+            //System.out.println(e.estimatedValue());
             return e.estimatedValue();
         }
         else {
             if (e.isMax()) {
                 List<LaskerMorrisGameState> sucesores = NoRandomEngine.sucesores(e);
-                quicksort(sucesores,0,sucesores.size()-1);
+                //System.out.println("GENERA ESTOS SUCESORES");
+                //System.out.println(sucesores.toString());
+                //quicksort(sucesores,0,sucesores.size()-1);
+                //System.out.println("LOS ORDENA DE ESTA FORMA");
+                for(int i = 0 ; i < sucesores.size() ; i++){
+                    //System.out.println(sucesores.get(i));
+                    //System.out.println(sucesores.get(i).estimatedValue());
+                }
                 for (int i = 0 ; i < sucesores.size() ; i++ ) {
                     alpha = Math.max(alpha , miniMax(sucesores.get(i), maxDepth-1 , alpha, beta));
                     if (beta <= alpha ) {
@@ -118,7 +129,11 @@ public class NoRandomEngine implements GameEngine {
             }
             else{
                 List<LaskerMorrisGameState> sucesores = NoRandomEngine.sucesores(e);
-                quicksort(sucesores,0,sucesores.size()-1);
+                //System.out.println("GENERA ESTOS SUCESORES");
+                //System.out.println(sucesores.toString());
+                //quicksort(sucesores,0,sucesores.size()-1);
+                //System.out.println("LOS ORDENA DE ESTA FORMA");
+                //System.out.println(sucesores.toString());quicksort(sucesores,0,sucesores.size()-1);
                 for (int i = 0 ; i < sucesores.size() ; i++ ) {
                     beta = Math.min(beta , miniMax(sucesores.get(i), maxDepth-1 , alpha, beta));
                     if (beta <= alpha ) {
@@ -133,7 +148,7 @@ public class NoRandomEngine implements GameEngine {
     public static void quicksort(List<LaskerMorrisGameState> a, int lo, int hi) { 
         if (hi <= lo) return;
         int j;
-        if (a.get(0).isMax()) {
+        if (!a.get(0).isMax()) {
             j = partitionDescendente(a, lo, hi);                
         }    
         else {
@@ -203,20 +218,20 @@ public class NoRandomEngine implements GameEngine {
 
 
     public  LaskerMorrisGameState computeMove(LaskerMorrisGameState e) {
-        int maxDepth = 3;
+        int maxDepth = 4;
         if (e.isFinal()) return null;
         else {
             if (e.isMax()) {
                 // jugar como blancas
                 List<LaskerMorrisGameState> sucesores = NoRandomEngine.sucesores(e);
-                int valor = miniMax(sucesores.get(0),maxDepth,-1000,1000);
+                int valor = miniMax(sucesores.get(0),maxDepth,-10000,10000);
                 LaskerMorrisGameState resultado = sucesores.get(0);
                 for (int i = 1; i < sucesores.size(); i++) {
                     LaskerMorrisGameState corriente = sucesores.get(i);
-                    int valorCorriente = miniMax(corriente,maxDepth,-1000,1000);
+                    int valorCorriente = miniMax(corriente,maxDepth,-10000,10000);
                     if (valorCorriente > valor) {
                         valor = valorCorriente;
-                        resultado = corriente;
+                        resultado = corriente; 
                     }
                 }
                 return resultado;   
@@ -224,11 +239,11 @@ public class NoRandomEngine implements GameEngine {
             else {
                 // jugar como negras
                 List<LaskerMorrisGameState> sucesores = sucesores(e);
-                int valor = miniMax(sucesores.get(0),maxDepth,-1000,1000);
+                int valor = miniMax(sucesores.get(0),maxDepth,-10000,10000);
                 LaskerMorrisGameState resultado = sucesores.get(0);
                 for (int i = 1; i < sucesores.size(); i++) {
                     LaskerMorrisGameState corriente = sucesores.get(i);
-                    int valorCorriente = miniMax(corriente,maxDepth,-1000,1000);
+                    int valorCorriente = miniMax(corriente,maxDepth,-10000,10000);
                     if (valorCorriente < valor) {
                         valor = valorCorriente;
                         resultado = corriente;
