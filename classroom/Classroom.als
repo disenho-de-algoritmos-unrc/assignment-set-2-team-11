@@ -130,11 +130,23 @@ run inv13
 /* Every student in a class is at least tutored by all the teachers
  * assigned to that class. */
 pred inv14 {
-    // TODO: Specify this property	
+   all c : Class | all s : Student | all t : Teacher | some g : Group |
+   (s -> g) in (c.Groups) and c in t.Teaches => s in t.Tutors
 }
+
+run inv14
+
+assert inv14Check {
+	inv14 => no s : Student | some c : Class | some t : Teacher | some g : Group |
+	(s -> g) in c.Groups and c in t.Teaches and s !in t.Tutors
+}
+
+check inv14Check
 
 
 /* The tutoring chain of every person eventually reaches a Teacher. */
 pred inv15 {
-    // TODO: Specify this property	
+    all p : Person | some t : Teacher | (t -> p) in *(Tutors)	
 }
+
+run inv15
