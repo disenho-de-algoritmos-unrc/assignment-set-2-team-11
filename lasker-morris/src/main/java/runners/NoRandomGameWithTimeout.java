@@ -48,7 +48,7 @@ public class NoRandomGameWithTimeout {
                 TimeLimitedCodeBlock.runWithTimeout(new ThreadedNoRandomEngine(state), TIMEOUT, TimeUnit.SECONDS);
             }
             catch (Exception e) {
-                // Got timeout.
+                System.out.println(" got Timeout");
             }
             LaskerMorrisGameState result = ThreadedNoRandomEngine.result;
             if (result == null) {

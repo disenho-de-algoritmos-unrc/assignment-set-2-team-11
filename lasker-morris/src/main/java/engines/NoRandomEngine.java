@@ -112,14 +112,14 @@ public class NoRandomEngine implements GameEngine {
         else {
             if (e.isMax()) {
                 List<LaskerMorrisGameState> sucesores = NoRandomEngine.sucesores(e);
-                System.out.println("GENERA ESTOS SUCESORES");
+                /*System.out.println("GENERA ESTOS SUCESORES");
                 System.out.println(sucesores.toString());
                 quicksort(sucesores,0,sucesores.size()-1);
                 System.out.println("LOS ORDENA DE ESTA FORMA");
                 for(int i = 0 ; i < sucesores.size() ; i++){
                 System.out.println(sucesores.get(i));
                 System.out.println(sucesores.get(i).estimatedValue());
-                }
+                } */
                 for (int i = 0 ; i < sucesores.size() ; i++ ) {
                     if (Thread.currentThread().isInterrupted())
                         break;
