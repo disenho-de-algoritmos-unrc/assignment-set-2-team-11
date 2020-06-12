@@ -1,21 +1,29 @@
-sig Equipo { } 
+sig Equipo { 
+	local: some Partido,
+	visitante: some Partido
+} 
 
 sig Partido {
-	local: one Equipo,
-	visitante: one Equipo
+	Juegan: Equipo -> Equipo
 }
 
 sig Fecha {
-	partidos: set Partido
+	partidos: some Partido
 }
 
 sig Fixture {
 	fechas: some Fecha
 }
 
-pred restriccionPartido[] {
-	all p : Partido | p.local != p.visitante
+pred cantEquiposPartido[] {
+	 all p : Partido |  #(p.Juegan) = 1
 }
+
+
+pred restriccionPartido[] {
+	all p : Partido | all e1, e2 : Equipo | (e1 -> e2) in p.Juegan => e1 != e2
+}
+
 
 pred esPar[] {
 	some k : Int | #Equipo = mul[2, k]
@@ -24,6 +32,17 @@ pred esPar[] {
 pred cantFechas[] {
 	#Fecha = minus[#Equipo, 1]
 }
+
+
+pred cantPartidosFecha[] {
+	all f : Fecha | #f.partidos = div[#Equipo, 2]
+}
+
+
+pred cantPartidos[] { 
+ #Partido = mul[#Fecha,2]
+}
+
 
 //todas las fechas deben pertenecer a algun fixture
 pred tenerFecha[] {
@@ -36,56 +55,72 @@ assert controlarFecha {
 
 //todos los equipos juegan un partido en todas las fechas
 pred juegan[] {
-	all e : Equipo | all f : Fecha | one p : Partido |
-	p in f.partidos and (p.local = e or p.visitante = e)
+	all e : Equipo | all f : Fecha | one p : Partido | p in f.partidos and (e -> Equipo) in ~(p.Juegan)
+	
 }
 
-assert controlaParticipacion {
-	juegan => no f : Fecha | no p : Partido | some e : Equipo | p in f.partidos && (p.local != e or p.visitante != e) 
+//no se juega el mismo partido en mas de una fecha
+pred partidosUnicos[] {
+	all p : Partido | one f : Fecha | p in f.partidos
 }
 
-
-//defien cuando dos partidos son distintos
-pred defPartidosDistintos[p1 : Partido, p2 : Partido] {
-	p1 != p2 iff p1.local != p2.local || p1.visitante != p2.visitante
-}
-
-//no se juegan dos partidos iguales
+//no hay dos partidos distintos que sean iguales
 pred partidosDistintos[] {
-	all p1, p2 : Partido | defPartidosDistintos[p1, p2]
+	all p1, p2 : Partido | p1 != p2 => p1.Juegan & p2.Juegan = none -> none
 }
+
 
 //no puede haber un mismo partido en mas de una fecha
 pred noPartidosRepetidos[] {
 	all p : Partido | one f : Fecha | p in f.partidos
 }
 
-assert assertNoPartidosRepetidos {
-	noPartidosRepetidos => no p : Partido | one f : Fecha | one f1: Fecha | p in f.partidos and p in f1.partidos and f != f1
-}
-
 
 //si un equipo juega contra otro de local, no pueden volver a jugar con la localia invertida
 pred cambiarLocalia[] {
-	all e1, e2 : Equipo | one p : Partido | (p.local = e1 and p.visitante = e2) => 
-	no p' : Partido | (p'.local = e2 and p'.visitante = e1)
+	all p1, p2 : Partido | p1 != p2 => ~(p1.Juegan) != p2.Juegan and ~(p2.Juegan) != p1.Juegan
 }
 
-pred cantPartidosFecha[] {
- all f : Fecha | #f.partidos = div[#Equipo, 2]
+//un equipo no puede jugar mas de un partido en la misma fecha
+pred unPartidoPorFecha[] {
+	all p1, p2 : Partido | all f : Fecha | all e : Equipo |
+	p1 in f.partidos and p2 in f.partidos and p1 != p2 and 
+	((e -> univ) & p1.Juegan != (none -> none) iff not (univ -> e) & p1.Juegan != (none -> none)) =>
+	((e -> univ) & p2.Juegan = (none -> none) and (univ -> e) & p2.Juegan = (none -> none))
 }
+
+pred esLocal[] {
+	all p : Partido | all e : Equipo | ((e -> univ) & p.Juegan != (none -> none)) iff p in e.local
+}
+
+pred esVisitante[] {
+	all p : Partido | all e : Equipo | ((univ -> e) & p.Juegan != (none -> none)) iff p in e.visitante
+}
+
+pred cantLocalVisitante[] {
+	all e : Equipo | (#(e.local) = div[#Equipo, 2]  and #(e.visitante) = minus[div[#Equipo, 2], 1]) iff not 
+	(#(e.visitante) = div[#Equipo, 2] and #(e.local) = minus[div[#Equipo, 2], 1])
+}
+
 
 
 fact {
-	esPar[] and 
-	cantFechas[] and
-	juegan[] and 
-	partidosDistintos[] and
-	cambiarLocalia[] and 
-	noPartidosRepetidos[] and
+	cantEquiposPartido[]
+	restriccionPartido[]
+	esPar[]
+	cantFechas[]
+	cantPartidosFecha[]
+	cantPartidos[]
 	tenerFecha[]
+	partidosDistintos[]
+	partidosUnicos[]
+	noPartidosRepetidos[]
+	cambiarLocalia[]
+	unPartidoPorFecha[]
+	esLocal[]
+	esVisitante[]
+	cantLocalVisitante[]
 }
 
-
 pred show[] { }
-run show 
+run show for 4 Equipo, 3 Fecha, 6 Partido, 1 Fixture
