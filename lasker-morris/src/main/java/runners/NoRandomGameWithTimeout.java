@@ -4,6 +4,7 @@ package runners;
 import java.util.concurrent.TimeUnit;
 import java.util.LinkedList;
 import engines.NoRandomEngine;
+import java.lang.Thread;
 
 import ThreadingUtils.TimeLimitedCodeBlock;
 import engines.ThreadedNoRandomEngine;
@@ -25,7 +26,7 @@ public class NoRandomGameWithTimeout {
     /**
      * Timeout in seconds for each player's timeout. 
      */
-    public static final int TIMEOUT = 60;
+    public static final int TIMEOUT = 10;
     
 	/**
 	 * Creates a game where whites play blacks using random engines for both players.
@@ -48,9 +49,10 @@ public class NoRandomGameWithTimeout {
                 TimeLimitedCodeBlock.runWithTimeout(new ThreadedNoRandomEngine(state), TIMEOUT, TimeUnit.SECONDS);
             }
             catch (Exception e) {
-                System.out.println(" got Timeout");
             }
+            
             LaskerMorrisGameState result = ThreadedNoRandomEngine.result;
+            
             if (result == null) {
                 error = true;
             }

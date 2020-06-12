@@ -32,7 +32,12 @@ public class ThreadedNoRandomEngine implements Runnable {
      */
     public void run() {
         NoRandomEngine engine = new NoRandomEngine();
-        ThreadedNoRandomEngine.result = engine.computeMove(state);
+        int depth = 1;
+        while(!Thread.currentThread().isInterrupted()){
+            ThreadedNoRandomEngine.result = engine.computeMove(state,depth);
+
+            depth++;
+        }
     }
 
 }
