@@ -1,3 +1,5 @@
+open util/ordering[Fecha] as ord
+
 sig Equipo { 
 	local: some Partido,
 	visitante: some Partido
@@ -29,18 +31,8 @@ pred esPar[] {
 	some k : Int | #Equipo = mul[2, k]
 }
 
-pred cantFechas[] {
-	#Fecha = minus[#Equipo, 1]
-}
-
-
 pred cantPartidosFecha[] {
 	all f : Fecha | #f.partidos = div[#Equipo, 2]
-}
-
-
-pred cantPartidos[] { 
- #Partido = mul[#Fecha,2]
 }
 
 
@@ -102,15 +94,21 @@ pred cantLocalVisitante[] {
 	(#(e.visitante) = div[#Equipo, 2] and #(e.local) = minus[div[#Equipo, 2], 1])
 }
 
+//hay exactamente una fecha en la cual se da que un equipo juega de local en ella y en la
+// siguiente (o de visitante)
+pred localVisitante[] {
+	all e : Equipo | one f : Fecha | let f' = f.(ord/next) { 
+		(e.local & f.partidos != none and e.local & f'.partidos != none) iff not
+		(e.visitante & f.partidos != none and e.visitante & f'.partidos != none)
+	}
+}
 
 
 fact {
 	cantEquiposPartido[]
 	restriccionPartido[]
 	esPar[]
-	cantFechas[]
 	cantPartidosFecha[]
-	cantPartidos[]
 	tenerFecha[]
 	partidosDistintos[]
 	partidosUnicos[]
@@ -120,7 +118,9 @@ fact {
 	esLocal[]
 	esVisitante[]
 	cantLocalVisitante[]
+	localVisitante[]
+	#Fecha = minus[#Equipo, 1]
 }
 
 pred show[] { }
-run show for 4 Equipo, 3 Fecha, 6 Partido, 1 Fixture
+run show for 6 Equipo, 5 Fecha, 15 Partido, 1 Fixture
