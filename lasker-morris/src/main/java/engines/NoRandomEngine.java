@@ -2,6 +2,8 @@ package engines;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
+    
 import model.LaskerMorrisBoard;
 import model.LaskerMorrisGameState;
 
@@ -12,276 +14,270 @@ import model.LaskerMorrisGameState;
  *
  */
 public class NoRandomEngine implements GameEngine {
-	 // Funcion que genera los sucesores de un estado dado
-    public static LinkedList<LaskerMorrisGameState> sucesores (LaskerMorrisGameState e){
-        LinkedList<LaskerMorrisGameState> result = new LinkedList<LaskerMorrisGameState>();
-      
+
+   /**
+    * For a given game state, returns all the possible successor game states.
+    * @param e a game state.
+    * @return a priority queue (whose priority is given by the heuristic evaluator) containing all successor moves given e.
+    */
+    public static PriorityQueue<LaskerMorrisGameState> successorStates(LaskerMorrisGameState e) {
+
+        PriorityQueue<LaskerMorrisGameState> resultMax = new PriorityQueue<LaskerMorrisGameState>(24, (a,b) -> -(a.estimatedValue() - b.estimatedValue()));
+
+        PriorityQueue<LaskerMorrisGameState> resultMin = new PriorityQueue<LaskerMorrisGameState>(24, (a,b) -> a.estimatedValue() - b.estimatedValue());
+    
+
         if (e.isFinal() ) {
-            return result;
+
+            return e.isMax()? resultMax : resultMin;
         }
-        else{
+
+        else {
+
         	for (int i = 0; i < LaskerMorrisBoard.POSITIONS; i++) {
-        		if (e.getValue(i) == 0 ) {
+
+        		if (e.getValue(i) == LaskerMorrisGameState.EMPTY ) {
+
         			if ((e.isWhitesTurn() && e.remainingWhiteStones() > 0 )||( !e.isWhitesTurn() && e.remainingBlackStones() > 0)) {
-	        			LaskerMorrisGameState sucesor = e.clone();
-	        			sucesor.putStone(i);
-	        			if (sucesor.isInMill(i)) {
-	        				LinkedList<LaskerMorrisGameState> listSucesores = millsStates(sucesor);
-	        			    result.addAll(listSucesores);
+
+	        			LaskerMorrisGameState successor = e.clone();
+
+	        			successor.putStone(i);
+
+	        			if (successor.isInMill(i)) {
+
+	        				LinkedList<LaskerMorrisGameState> listOfSuccessors = millStates(successor);
+
+	        			    if (e.isMax()) resultMax.addAll(listOfSuccessors); else resultMin.addAll(listOfSuccessors);
                         }	
-	        			else{
-	        			    sucesor.setWhitesTurn(!e.isWhitesTurn());
-                            sucesor.setClosedMill(false);
-	        				result.add(sucesor);
+
+	        			else {
+
+	        			    successor.setWhitesTurn(!e.isWhitesTurn());
+
+                            successor.setClosedMill(false);
+
+	        				if (e.isMax()) resultMax.add(successor); else resultMin.add(successor);
+                            
 	        			}
         			}
         		}
-        		else{
-                    if (e.canMoveStone() && ((e.getValue(i) == 1 && e.isWhitesTurn())|| (e.getValue(i) == 2 && !e.isWhitesTurn() ))){
-	        			int ficha = e.getValue(i);
-                        List<Integer> adyacencias = new LinkedList<Integer>();
-	        			if ((e.isWhitesTurn() && e.remainingWhiteStones() == 0 && e.numberOfWhiteStonesOnBoard() == 3 )  || (!e.isWhitesTurn() && e.remainingBlackStones() == 0 && e.numberOfBlackStonesOnBoard() == 3)){       
+
+        		else {
+
+                    if (e.canMoveStone() && ((e.getValue(i) == 1 && e.isWhitesTurn())|| (e.getValue(i) == 2 && !e.isWhitesTurn() ))) {
+
+	        			int stone = e.getValue(i);
+
+                        List<Integer> adjacencies = new LinkedList<Integer>();
+
+	        			if ((e.isWhitesTurn() && e.remainingWhiteStones() == 0 && e.numberOfWhiteStonesOnBoard() == 3 )  || (!e.isWhitesTurn() && e.remainingBlackStones() == 0 && e.numberOfBlackStonesOnBoard() == 3)) {
+
                             for (int k = 0; k < LaskerMorrisBoard.POSITIONS; k++ ) {
+
                                 if ( e.getValue(k) == LaskerMorrisGameState.EMPTY ) {
-                                    adyacencias.add(k);
+
+                                    adjacencies.add(k);
                                 }
                             }
                         }
-                        else{
-                            adyacencias = LaskerMorrisBoard.getInstance().getAdjacencies(i);
+
+                        else {
+
+                            adjacencies = LaskerMorrisBoard.getInstance().getAdjacencies(i);
                         }    
-	        			for (int j = 0; j < adyacencias.size() ; j++) {
-	    					if(e.getValue(adyacencias.get(j)) == 0){
-	        					LaskerMorrisGameState sucesor = e.clone();
-		        				sucesor.moveStone(i,adyacencias.get(j));
-		        				if (sucesor.isInMill(adyacencias.get(j))) {
-			        				LinkedList<LaskerMorrisGameState> listSucesores = millsStates(sucesor);
-                                    result.addAll(listSucesores);
+
+	        			for (int j = 0; j < adjacencies.size() ; j++) {
+
+	    					if (e.getValue(adjacencies.get(j)) == 0) {
+
+	        					LaskerMorrisGameState successor = e.clone();
+
+		        				successor.moveStone(i, adjacencies.get(j));
+
+		        				if (successor.isInMill(adjacencies.get(j))) {
+
+			        				LinkedList<LaskerMorrisGameState> listOfSuccessors = millStates(successor);
+
+                                    if (e.isMax()) resultMax.addAll(listOfSuccessors); else resultMin.addAll(listOfSuccessors);
 			        			}
-                                else{
-                                    sucesor.setWhitesTurn(!e.isWhitesTurn());
-			        				sucesor.setClosedMill(false);
-                                    result.add(sucesor);
+
+                                else {
+
+                                    successor.setWhitesTurn(!e.isWhitesTurn());
+
+			        				successor.setClosedMill(false);
+
+                                    if (e.isMax()) resultMax.add(successor); else resultMin.add(successor);
 			        			}
 	    					}	
 	        			}
                     }
         		}
         	}
-        	return result;
+
+            return e.isMax()? resultMax : resultMin;
         }
     }
 
-
-    private static LinkedList<LaskerMorrisGameState> millsStates (LaskerMorrisGameState e){
+   /**
+    * Creates all states containing the possible ways in which you may remove an opponent's stone after forming a mill.
+    * @param e a game state.
+    * @return a list with all possible states formed from removing any available adversary's stone.
+    */
+    private static LinkedList<LaskerMorrisGameState> millStates (LaskerMorrisGameState e) {
         
         LinkedList<LaskerMorrisGameState> result = new LinkedList<LaskerMorrisGameState>();
 
         for (int j = 0; j < LaskerMorrisBoard.POSITIONS; j++ ) {
+
             if (e.isWhitesTurn() && e.getValue(j) == LaskerMorrisGameState.BLACK ) {
-                LaskerMorrisGameState sucesorDelete = e.clone();
-                sucesorDelete.removeStone(j);
-                sucesorDelete.setWhitesTurn(!e.isWhitesTurn());
-                sucesorDelete.setClosedMill(true);
-                result.add(sucesorDelete);
+
+                LaskerMorrisGameState deletionState = e.clone();
+
+                deletionState.removeStone(j);
+
+                deletionState.setWhitesTurn(!e.isWhitesTurn());
+
+                deletionState.setClosedMill(true);
+
+                result.add(deletionState);
             }
-            else if(!e.isWhitesTurn() && e.getValue(j) == LaskerMorrisGameState.WHITE){
-                LaskerMorrisGameState sucesorDelete = e.clone();
-                sucesorDelete.removeStone(j);
-                sucesorDelete.setWhitesTurn(!e.isWhitesTurn());
-                sucesorDelete.setClosedMill(true);
-                result.add(sucesorDelete);
+
+            else if (!e.isWhitesTurn() && e.getValue(j) == LaskerMorrisGameState.WHITE) {
+
+                LaskerMorrisGameState deletionState = e.clone();
+
+                deletionState.removeStone(j);
+
+                deletionState.setWhitesTurn(!e.isWhitesTurn());
+
+                deletionState.setClosedMill(true);
+
+                result.add(deletionState);
             }
         }
+
         return result;
     }
 
+   /**
+    * For a given game state, a maximum depth of search, and alpha and beta values for alpha-beta pruning, calculate an optimal move.
+    * @param e a game state.
+    * @param maxDepth the depth to which the game tree will be searched.
+    * @param alpha for alpha-beta pruning optimization.
+    * @param beta for alpha-beta pruning optimization.
+    * @return value for the best possible play up to the given depth.
+    */
     public static int miniMax(LaskerMorrisGameState e, int maxDepth, int alpha, int beta) {
-        if (Thread.currentThread().isInterrupted())
-            return e.estimatedValue();
+
+        if (Thread.currentThread().isInterrupted()) return e.estimatedValue();
+
         if ( e.isFinal() || maxDepth == 0) {
+
             return e.estimatedValue();
         }
+
         else {
+
             if (e.isMax()) {
-                List<LaskerMorrisGameState> sucesores = NoRandomEngine.sucesores(e);
-                for (int i = 0 ; i < sucesores.size() ; i++ ) {
-                    if (Thread.currentThread().isInterrupted())
-                        break;
-                    alpha = Math.max(alpha , miniMax(sucesores.get(i), maxDepth-1 , alpha, beta));
-                    if (beta <= alpha ) {
-                        break;
-                    }
+
+                PriorityQueue<LaskerMorrisGameState> successors = NoRandomEngine.successorStates(e);
+
+                for (LaskerMorrisGameState s : successors) {
+
+                    if (Thread.currentThread().isInterrupted()) break;
+
+                    alpha = Math.max(alpha , miniMax(successors.peek(), maxDepth - 1 , alpha, beta));
+
+                    if (beta <= alpha) break;
                 }
+
                 return alpha;
             }
-            else{
-                List<LaskerMorrisGameState> sucesores = NoRandomEngine.sucesores(e);
-                for (int i = 0 ; i < sucesores.size() ; i++ ) {
-                    if (Thread.currentThread().isInterrupted())
-                        break;
-                    beta = Math.min(beta , miniMax(sucesores.get(i), maxDepth-1 , alpha, beta));
-                    if (beta <= alpha ) {
-                        break;
-                    }
+
+            else {
+
+                PriorityQueue<LaskerMorrisGameState> successors = NoRandomEngine.successorStates(e);
+
+                for (LaskerMorrisGameState s : successors) {
+
+                    if (Thread.currentThread().isInterrupted()) break;
+
+                    beta = Math.min(beta , miniMax(successors.peek(), maxDepth - 1 , alpha, beta));
+
+                    if (beta <= alpha) break;
                 }
+
                 return beta;
             }
         }
     }
 
+   /**
+    * For a given turn, compute the best possible play.
+    * @param e a game state.
+    * @return the game state to be played in the given turn.
+    */
+    public LaskerMorrisGameState computeMove(LaskerMorrisGameState e) {
 
-    public  LaskerMorrisGameState computeMove(LaskerMorrisGameState e, int maxDepth) {
-        if (e.isFinal()) return null;
+        if (e.isFinal()) {
+
+            return null;
+        }
+
         else {
+
             if (e.isMax()) {
-                // jugar como blancas
-                List<LaskerMorrisGameState> sucesores = NoRandomEngine.sucesores(e);
-                LaskerMorrisGameState resultado = sucesores.get(0);
-                int valor = miniMax(sucesores.get(0), maxDepth, -10000, 10000);
-                for (int i = 1; i < sucesores.size(); i++) {
-                    LaskerMorrisGameState corriente = sucesores.get(i);
-                    int valorCorriente = miniMax(corriente, maxDepth, -10000, 10000);
-                    if (valorCorriente > valor) {
-                        valor = valorCorriente;
-                        resultado = corriente;
+                
+                PriorityQueue<LaskerMorrisGameState> successors = NoRandomEngine.successorStates(e);
+
+                LaskerMorrisGameState result = successors.peek();
+
+                int value = miniMax(successors.peek(), ThreadedNoRandomEngine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
+
+                for (LaskerMorrisGameState s : successors) {
+
+                    LaskerMorrisGameState current = successors.peek();
+
+                    int currentValue = miniMax(current, ThreadedNoRandomEngine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
+
+                    if (currentValue > value) {
+
+                        value = currentValue;
+
+                        result = current;
                     }
                 }
-                return resultado;
-            } else {
-                // jugar como negras
-                List<LaskerMorrisGameState> sucesores = NoRandomEngine.sucesores(e);
-                LaskerMorrisGameState resultado = sucesores.get(0);
-                int valor = miniMax(sucesores.get(0), maxDepth, -10000, 10000);
-                for (int i = 1; i < sucesores.size(); i++) {
-                    LaskerMorrisGameState corriente = sucesores.get(i);
-                    int valorCorriente = miniMax(corriente, maxDepth, -10000, 10000);
-                    if (valorCorriente < valor) {
-                        valor = valorCorriente;
-                        resultado = corriente;
+
+                return result;
+            } 
+
+            else {
+
+                PriorityQueue<LaskerMorrisGameState> successors = NoRandomEngine.successorStates(e);
+
+                LaskerMorrisGameState result = successors.peek();
+
+                int value = miniMax(successors.peek(), ThreadedNoRandomEngine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
+
+                for (LaskerMorrisGameState s : successors) {
+
+                    LaskerMorrisGameState current = successors.peek();
+
+                    int currentValue = miniMax(current, ThreadedNoRandomEngine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
+
+                    if (currentValue < value) {
+
+                        value = currentValue;
+
+                        result = current;
                     }
                 }
-                return resultado;
+
+                return result;
             }
         }  
     }
-
-         /**
-     * Quickly computes a move when issued an interrupt or timeout.
-     * @param state is the state from which to move
-     * @return the first available move, prioritizing putting a stone.
-     */
-    public LaskerMorrisGameState failSafeResult(LaskerMorrisGameState state) {
-        if (state == null) throw new IllegalArgumentException("null state");
-        if (state.isFinal()) throw new IllegalArgumentException("final state");
-        LaskerMorrisGameState output = state.clone();
-        if (state.isWhitesTurn()) {
-            if (state.remainingWhiteStones() > 0) {
-                // Put stone in first available place
-                for (int position = 0; position < LaskerMorrisBoard.POSITIONS; position++) {
-                    if (output.getValue(position) == LaskerMorrisGameState.EMPTY) {
-                        output.putStone(position);
-                        if (output.isInMill(position)) {
-                            output = removeFirstStone(output);                    
-                        }
-                        output.setWhitesTurn(!output.isWhitesTurn());
-                        return output;
-                    }
-                }
-            }
-            else {
-                // Move first possible stone
-                for (int position = 0; position < LaskerMorrisBoard.POSITIONS; position++) {
-                    if (output.getValue(position) == LaskerMorrisGameState.WHITE && output.getNumberOfFreeAdjacent(position) > 0) {
-                        for (int target: LaskerMorrisBoard.getInstance().getAdjacencies(position)) {
-                            if (!output.isOccupied(target)) {
-                                output.moveStone(position, target);
-                                if (output.isInMill(target)) {
-                                    output = removeFirstStone(output);                    
-                                }
-                                output.setWhitesTurn(!output.isWhitesTurn());
-                                return output;
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-        else {
-            if (state.remainingBlackStones() > 0) {
-                // Put stone in first available place
-                for (int position = 0; position < LaskerMorrisBoard.POSITIONS; position++) {
-                    if (output.getValue(position) == LaskerMorrisGameState.EMPTY) {
-                        output.putStone(position);
-                        if (output.isInMill(position)) {
-                            output = removeFirstStone(output);                    
-                        }
-                        output.setWhitesTurn(!output.isWhitesTurn());
-                        return output;
-                    }
-                }
-            }
-            else {
-                // Move first possible stone
-                for (int position = 0; position < LaskerMorrisBoard.POSITIONS; position++) {
-                    if (output.getValue(position) == LaskerMorrisGameState.BLACK && output.getNumberOfFreeAdjacent(position) > 0) {
-                        for (int target: LaskerMorrisBoard.getInstance().getAdjacencies(position)) {
-                            if (!output.isOccupied(target)) {
-                                output.moveStone(position, target);
-                                if (output.isInMill(target)) {
-                                    output = removeFirstStone(output);                    
-                                }
-                                output.setWhitesTurn(!output.isWhitesTurn());
-                                return output;
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-        // should never reach this point.
-        return null;
-    }
-
-    /**
-     * Removes the first stone found of the adversary
-     * @param state is the state from which to remove an adversary's stone
-     * @return a clone of state, where the first available stone of the adversary was removed.
-    */
-    private LaskerMorrisGameState removeFirstStone(LaskerMorrisGameState state) {
-        if (state == null) throw new IllegalArgumentException("null state");
-
-        //System.out.println("Removing!");
-
-        LaskerMorrisGameState output = state.clone();
-
-        if (output.isWhitesTurn()) {
-            // remove black stone
-            if (output.numberOfBlackStonesOnBoard() == 0) throw new IllegalArgumentException("no stone to remove");
-            for (int position = 0; position < LaskerMorrisBoard.POSITIONS; position++) {
-                if (output.getValue(position) == LaskerMorrisGameState.BLACK) {
-                    output.removeStone(position);
-                    return output;
-                }
-            }
-            return output;
-        }
-        else {
-            // remove white stone
-            if (output.numberOfBlackStonesOnBoard() == 0) throw new IllegalArgumentException("no stone to remove");
-            for (int position = 0; position < LaskerMorrisBoard.POSITIONS; position++) {
-                if (output.getValue(position) == LaskerMorrisGameState.WHITE) {
-                    output.removeStone(position);
-                    return output;
-                }
-            }
-            return output;
-        }
-    }
-
-
-
 
 }

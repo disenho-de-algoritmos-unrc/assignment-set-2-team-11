@@ -19,6 +19,8 @@ public class ThreadedNoRandomEngine implements Runnable {
      */
     public static LaskerMorrisGameState result;
 
+    public static int depth;
+
     /**
      * Default constructor
      * @param state is the source state to play from
@@ -31,10 +33,14 @@ public class ThreadedNoRandomEngine implements Runnable {
      * Runs a stoppable random engine.
      */
     public void run() {
+
         NoRandomEngine engine = new NoRandomEngine();
-        int depth = 1;
-        while(!Thread.currentThread().isInterrupted()){
-            ThreadedNoRandomEngine.result = engine.computeMove(state,depth);
+
+        depth = 1;
+
+        while (!Thread.currentThread().isInterrupted()) {
+
+            ThreadedNoRandomEngine.result = engine.computeMove(state);
 
             depth++;
         }

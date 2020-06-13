@@ -26,7 +26,7 @@ public class NoRandomGameWithTimeout {
     /**
      * Timeout in seconds for each player's timeout. 
      */
-    public static final int TIMEOUT = 10;
+    public static final int TIMEOUT = 60;
     
 	/**
 	 * Creates a game where whites play blacks using random engines for both players.
@@ -49,6 +49,7 @@ public class NoRandomGameWithTimeout {
                 TimeLimitedCodeBlock.runWithTimeout(new ThreadedNoRandomEngine(state), TIMEOUT, TimeUnit.SECONDS);
             }
             catch (Exception e) {
+
             }
             
             LaskerMorrisGameState result = ThreadedNoRandomEngine.result;
