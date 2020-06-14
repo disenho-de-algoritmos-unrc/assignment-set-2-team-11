@@ -18,5 +18,5 @@ public interface GameEngine {
      * @param state is the game state to move from
      * @return the computed next state.
      */
-    public LaskerMorrisGameState computeMove(LaskerMorrisGameState state,int depth);
+    public LaskerMorrisGameState computeMove(LaskerMorrisGameState state);
 }
