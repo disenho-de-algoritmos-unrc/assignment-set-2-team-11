@@ -13,7 +13,7 @@ import model.LaskerMorrisGameState;
  * @author aguirre
  *
  */
-public class NoRandomEngine implements GameEngine {
+public class Team11Engine implements GameEngine {
 
    /**
     * For a given game state, returns all the possible successor game states.
@@ -182,7 +182,7 @@ public class NoRandomEngine implements GameEngine {
 
             if (e.isMax()) {
 
-                PriorityQueue<LaskerMorrisGameState> successors = NoRandomEngine.successorStates(e);
+                PriorityQueue<LaskerMorrisGameState> successors = Team11Engine.successorStates(e);
 
                 for (LaskerMorrisGameState s : successors) {
 
@@ -198,7 +198,7 @@ public class NoRandomEngine implements GameEngine {
 
             else {
 
-                PriorityQueue<LaskerMorrisGameState> successors = NoRandomEngine.successorStates(e);
+                PriorityQueue<LaskerMorrisGameState> successors = Team11Engine.successorStates(e);
 
                 for (LaskerMorrisGameState s : successors) {
 
@@ -230,17 +230,17 @@ public class NoRandomEngine implements GameEngine {
 
             if (e.isMax()) {
                 
-                PriorityQueue<LaskerMorrisGameState> successors = NoRandomEngine.successorStates(e);
+                PriorityQueue<LaskerMorrisGameState> successors = Team11Engine.successorStates(e);
 
                 LaskerMorrisGameState result = successors.peek();
 
-                int value = miniMax(successors.peek(), ThreadedNoRandomEngine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
+                int value = miniMax(successors.peek(), ThreadedTeam11Engine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
 
                 for (LaskerMorrisGameState s : successors) {
 
                     LaskerMorrisGameState current = successors.peek();
 
-                    int currentValue = miniMax(current, ThreadedNoRandomEngine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
+                    int currentValue = miniMax(current, ThreadedTeam11Engine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
 
                     if (currentValue > value) {
 
@@ -255,17 +255,17 @@ public class NoRandomEngine implements GameEngine {
 
             else {
 
-                PriorityQueue<LaskerMorrisGameState> successors = NoRandomEngine.successorStates(e);
+                PriorityQueue<LaskerMorrisGameState> successors = Team11Engine.successorStates(e);
 
                 LaskerMorrisGameState result = successors.peek();
 
-                int value = miniMax(successors.peek(), ThreadedNoRandomEngine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
+                int value = miniMax(successors.peek(), ThreadedTeam11Engine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
 
                 for (LaskerMorrisGameState s : successors) {
 
                     LaskerMorrisGameState current = successors.peek();
 
-                    int currentValue = miniMax(current, ThreadedNoRandomEngine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
+                    int currentValue = miniMax(current, ThreadedTeam11Engine.depth, LaskerMorrisGameState.minValue(), LaskerMorrisGameState.maxValue());
 
                     if (currentValue < value) {
 

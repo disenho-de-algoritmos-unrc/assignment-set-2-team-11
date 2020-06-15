@@ -244,6 +244,10 @@ public class LaskerMorrisGameState {
         this.whitePlays = whitesTurn;		
     }
 
+
+   /**
+    * True iff a mill was formed in the current game state.
+    */
     public void setClosedMill(boolean closeMill){
         this.closedMill = closeMill;
     }
