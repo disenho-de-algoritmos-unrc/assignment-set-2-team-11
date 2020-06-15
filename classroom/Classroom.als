@@ -102,14 +102,8 @@ run inv10
 /* A class only has groups if it has a teacher assigned. */
 pred inv11 {
     	all c : Class | some t : Teacher | c !in t.Teaches  implies
-	c.Groups = (none -> none)
+	no g : Group | c.Groups & (Person -> g) != none -> none
 }
-
-assert hola {
-	inv11 implies no c : Class | some t : Teacher | c !in t.Teaches and c.Groups != (none -> none)
-}
-
-check hola
 
 run inv11
 
@@ -130,11 +124,11 @@ run inv13
 /* Every student in a class is at least tutored by all the teachers
  * assigned to that class. */
 pred inv14 {
-   all c : Class | all s : Student | all t : Teacher | some g : Group |
-   (s -> g) in (c.Groups) and c in t.Teaches => s in t.Tutors
+   all c : Class | all s : Student | all t : Teacher | 
+   ((s -> Group) & (c.Groups) != none -> none) and c in t.Teaches => s in t.Tutors
 }
 
-run inv14
+run inv14 
 
 assert inv14Check {
 	inv14 => no s : Student | some c : Class | some t : Teacher | some g : Group |
@@ -142,7 +136,6 @@ assert inv14Check {
 }
 
 check inv14Check
-
 
 /* The tutoring chain of every person eventually reaches a Teacher. */
 pred inv15 {

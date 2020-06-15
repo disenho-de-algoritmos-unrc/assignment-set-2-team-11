@@ -119,8 +119,11 @@ fact {
 	esVisitante[]
 	cantLocalVisitante[]
 	localVisitante[]
-	#Fecha = minus[#Equipo, 1]
+	#Fecha = minus[#Equipo,1]
 }
 
-pred show[] { }
-run show for 6 Equipo, 5 Fecha, 15 Partido, 1 Fixture
+pred show1[] { }
+run show1 for exactly 4 Equipo, 3 Fecha, 6 Partido, 1 Fixture
+
+pred show2[] { }
+run show2 for exactly 6 Equipo, 5 Fecha, 15 Partido, 1 Fixture
