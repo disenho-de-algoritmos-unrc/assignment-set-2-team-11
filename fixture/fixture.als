@@ -17,20 +17,22 @@ sig Fixture {
 	fechas: some Fecha
 }
 
+//En un partido participan solo dos equipos
 pred cantEquiposPartido[] {
 	 all p : Partido |  #(p.Juegan) = 1
 }
 
-
+//Ningun equipo puede jugar un partido contra sigo mismo
 pred restriccionPartido[] {
 	all p : Partido | all e1, e2 : Equipo | (e1 -> e2) in p.Juegan => e1 != e2
 }
 
-
+//La cantidad de equipos es par
 pred esPar[] {
 	some k : Int | #Equipo = mul[2, k]
 }
 
+//Cada fecha tiene k/2 cantidad de partidos, con k la cantidad de equipos
 pred cantPartidosFecha[] {
 	all f : Fecha | #f.partidos = div[#Equipo, 2]
 }
@@ -43,12 +45,6 @@ pred tenerFecha[] {
 
 assert controlarFecha {
 	tenerFecha => no f : Fecha | some f1 : Fixture | f !in f1.fechas
-}
-
-//todos los equipos juegan un partido en todas las fechas
-pred juegan[] {
-	all e : Equipo | all f : Fecha | one p : Partido | p in f.partidos and (e -> Equipo) in ~(p.Juegan)
-	
 }
 
 //no se juega el mismo partido en mas de una fecha
@@ -77,18 +73,22 @@ pred cambiarLocalia[] {
 pred unPartidoPorFecha[] {
 	all p1, p2 : Partido | all f : Fecha | all e : Equipo |
 	p1 in f.partidos and p2 in f.partidos and p1 != p2 and 
-	((e -> univ) & p1.Juegan != (none -> none) iff not (univ -> e) & p1.Juegan != (none -> none)) =>
-	((e -> univ) & p2.Juegan = (none -> none) and (univ -> e) & p2.Juegan = (none -> none))
+	((e -> Equipo) & p1.Juegan != (none -> none) iff not (Equipo -> e) & p1.Juegan != (none -> none)) =>
+	((e -> Equipo) & p2.Juegan = (none -> none) and (Equipo -> e) & p2.Juegan = (none -> none))
 }
 
+//En un partido e1 -> e2, e1 es el local
 pred esLocal[] {
-	all p : Partido | all e : Equipo | ((e -> univ) & p.Juegan != (none -> none)) iff p in e.local
+	all p : Partido | all e : Equipo | ((e -> Equipo) & p.Juegan != (none -> none)) iff p in e.local
 }
 
+//En un partido e1 -> e2, e2 es ek visitante
 pred esVisitante[] {
-	all p : Partido | all e : Equipo | ((univ -> e) & p.Juegan != (none -> none)) iff p in e.visitante
+	all p : Partido | all e : Equipo | ((Equipo -> e) & p.Juegan != (none -> none)) iff p in e.visitante
 }
 
+//Cada equipo juega k/2 partidos de local y k/2 - 1 de visitante (o al reves), con
+// k la cantidad de equipos
 pred cantLocalVisitante[] {
 	all e : Equipo | (#(e.local) = div[#Equipo, 2]  and #(e.visitante) = minus[div[#Equipo, 2], 1]) iff not 
 	(#(e.visitante) = div[#Equipo, 2] and #(e.local) = minus[div[#Equipo, 2], 1])
