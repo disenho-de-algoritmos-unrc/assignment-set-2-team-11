@@ -30,13 +30,6 @@ public class GranDTFitnessFunction extends FitnessFunction {
     @Override
     protected double evaluate(IChromosome c) {
 
-        Integer[] candidates = new Integer[myTeam.getTeamSize()];
-
-        for (int i = 0 ; i < candidates.length; i++) {
-
-            candidates[i] = (Integer) c.getGene(i).getAllele();
-        }
-
         List<Player> team = TeamGenerator.chromosomeToTeam(c, myTeam, catalogue);
        
         if (team == null || !myTeam.isValidTeam(team)) return 0;
