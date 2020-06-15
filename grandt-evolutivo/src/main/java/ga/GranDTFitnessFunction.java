@@ -10,52 +10,44 @@ import java.util.LinkedList;
 import org.jgap.*;
 import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
+import java.util.Arrays;
 
 
 public class GranDTFitnessFunction extends FitnessFunction {
 
     TeamConfiguration myTeam;
 
-   	PlayersCatalogue myCatalogue;
+   	PlayersCatalogue catalogue;
 
-    public GranDTFitnessFunction(TeamConfiguration team, PlayersCatalogue catalogue){
+    public GranDTFitnessFunction(TeamConfiguration team, PlayersCatalogue catalogue) {
+
     	this.myTeam = team;
-    	this.myCatalogue = catalogue;
+
+    	this.catalogue = catalogue;
     }
 
 
     @Override
     protected double evaluate(IChromosome c) {
-       
-        List<Player> candidate = new LinkedList<Player>();
-        for (int i = 0; i < 15 ; i++ ) {
-        	int player = (int) (c.getGene(i).getAllele()) -1;
-        	if (player < myCatalogue.numGoalkeepers()) {
-        		candidate.add(myCatalogue.getGoalkeeper(player) ); 	
-        	}
-        	else{
-        		player = player - myCatalogue.numGoalkeepers();
-        	}
-        	if(player <  myCatalogue.numDefenders() ){
-        		candidate.add(myCatalogue.getDefender(player));
-        	}
-        	else{
-        		player = player - myCatalogue.numDefenders();
-        	}
-        	if(player < myCatalogue.numMidfielders()){
-        		candidate.add(myCatalogue.getMidfielder(player));
-        	}
-        	else{
-        		player = player - myCatalogue.numMidfielders();
-        		candidate.add(myCatalogue.getStriker(player));
-        	}
+
+        Integer[] candidates = new Integer[myTeam.getTeamSize()];
+
+        for (int i = 0 ; i < candidates.length; i++) {
+
+            candidates[i] = (Integer) c.getGene(i).getAllele();
         }
+
+        List<Player> team = TeamGenerator.chromosomeToTeam(c, myTeam, catalogue);
        
-        if (!myTeam.isValidTeam(candidate)) return 0;
-        double valor = 0;
-        for (Player player : candidate ) {
-                valor = valor + player.getScore();
+        if (team == null || !myTeam.isValidTeam(team)) return 0;
+
+        double value = 0;
+
+        for (Player player : team ) {
+
+                value += player.getScore();
         } 
-        return valor;
+
+        return value;
     }
 }

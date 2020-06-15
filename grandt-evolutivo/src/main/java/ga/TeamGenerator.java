@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Arrays;
 
 import org.jgap.InvalidConfigurationException;
 
@@ -37,6 +38,59 @@ public class TeamGenerator {
         this.configuration = newConfiguration;
     }
 
+    public static List<Player> chromosomeToTeam(IChromosome c, TeamConfiguration config, PlayersCatalogue catalogue) {
+
+        Integer[] candidates = new Integer[config.getTeamSize()];
+
+        for (int i = 0 ; i < candidates.length ; i++ ) {
+
+            candidates[i] = (Integer) c.getGene(i).getAllele();
+        }
+
+        if (!Arrays.equals(candidates, Arrays.stream(candidates).distinct().toArray())) return null; 
+
+        int goalies = 0;
+        int mids = 0;
+        int defs = 0;
+        int stks = 0;
+
+        List<Player> team = new LinkedList<Player>();
+
+        for (int i = 0 ; i < candidates.length; i++) {
+
+            if (goalies < 2 && candidates[i] < catalogue.numGoalkeepers()) {
+
+                team.add(catalogue.getGoalkeeper(candidates[i]));
+
+                goalies++;
+            }
+
+            else if (defs < 5 && candidates[i] < catalogue.numDefenders()) {
+
+                team.add(catalogue.getDefender(candidates[i]));
+
+                defs++;
+            }
+
+            else if (mids < 4 && candidates[i] < catalogue.numMidfielders()) {
+
+                team.add(catalogue.getMidfielder(candidates[i]));
+
+                mids++;
+
+            }
+
+            else if (stks < 4 && candidates[i] < catalogue.numStrikers()) {
+
+                team.add(catalogue.getStriker(candidates[i]));
+
+                stks++;
+            }
+        }
+
+        return team;
+    }
+
 
     /**
      * Generates a near-optimal team using a genetic algorithm. 
@@ -44,65 +98,55 @@ public class TeamGenerator {
      * @throws InvalidConfigurationException when called on an invalid configuration (JGAP).
      */
     public List<Player> generateTeam() throws InvalidConfigurationException {
-        Configuration conf = new DefaultConfiguration();
-        conf.reset();
-        conf.setPreservFittestIndividual(true);
-        conf.setKeepPopulationSizeConstant(false);
-        FitnessFunction myFunc =
-                new GranDTFitnessFunction(this.configuration,this.catalogue);
-        conf.setFitnessFunction( myFunc );
-        Gene[] sampleGenes = new Gene[ 15 ];
-        sampleGenes[0] = new IntegerGene(conf,1,707);
-        sampleGenes[1] = new IntegerGene(conf,1,707);
-        sampleGenes[2] = new IntegerGene(conf,1,707);
-        sampleGenes[3] = new IntegerGene(conf,1,707);
-        sampleGenes[4] = new IntegerGene(conf,1,707);
-        sampleGenes[5] = new IntegerGene(conf,1,707);
-        sampleGenes[6] = new IntegerGene(conf,1,707);
-        sampleGenes[7] = new IntegerGene(conf,1,707);
-        sampleGenes[8] = new IntegerGene(conf,1,707);
-        sampleGenes[9] = new IntegerGene(conf,1,707);
-        sampleGenes[10] = new IntegerGene(conf,1,707);
-        sampleGenes[11] = new IntegerGene(conf,1,707);
-        sampleGenes[12] = new IntegerGene(conf,1,707);
-        sampleGenes[13] = new IntegerGene(conf,1,707);
-        sampleGenes[14] = new IntegerGene(conf,1,707);
-        Chromosome sampleChromosome = new Chromosome(conf, sampleGenes);
-        conf.setSampleChromosome( sampleChromosome );
 
-        conf.setPopulationSize( 3000 );
+        Configuration conf = new DefaultConfiguration();
+
+
+        FitnessFunction myFunc = new GranDTFitnessFunction(this.configuration,this.catalogue);
+
+        conf.setFitnessFunction( myFunc );
+
+        Gene [] sampleGenes = new Gene[ configuration.getTeamSize()];
+
+        sampleGenes[0] = new IntegerGene(conf, 1, catalogue.numGoalkeepers());
+        sampleGenes[1] = new IntegerGene(conf, 1, catalogue.numGoalkeepers());
+
+        sampleGenes[2] = new IntegerGene(conf, 1, catalogue.numDefenders());
+        sampleGenes[3] = new IntegerGene(conf, 1, catalogue.numDefenders());
+        sampleGenes[4] = new IntegerGene(conf, 1, catalogue.numDefenders());
+        sampleGenes[5] = new IntegerGene(conf, 1, catalogue.numDefenders());
+        sampleGenes[6] = new IntegerGene(conf, 1, catalogue.numDefenders());
+
+        sampleGenes[7] = new IntegerGene(conf, 1, catalogue.numMidfielders());
+        sampleGenes[8] = new IntegerGene(conf, 1, catalogue.numMidfielders());
+        sampleGenes[9] = new IntegerGene(conf, 1, catalogue.numMidfielders());
+        sampleGenes[10] = new IntegerGene(conf, 1, catalogue.numMidfielders());
+
+        sampleGenes[11] = new IntegerGene(conf, 1, catalogue.numStrikers());
+        sampleGenes[12] = new IntegerGene(conf, 1, catalogue.numStrikers());
+        sampleGenes[13] = new IntegerGene(conf, 1, catalogue.numStrikers());
+        sampleGenes[14] = new IntegerGene(conf, 1, catalogue.numStrikers());
+
+        Chromosome sampleChromosome = new Chromosome(conf, sampleGenes);
+
+        conf.setSampleChromosome(sampleChromosome);
+
+        conf.setPopulationSize(4000);
+
+        int generations = 40;
+
         Genotype population = Genotype.randomInitialGenotype(conf);
-        int MAX_ALLOWED_EVOLUTION = 30;
-        for (int i = 0; i<=MAX_ALLOWED_EVOLUTION; i++) {
+
+        IChromosome bestTeamSoFar = population.getFittestChromosome();
+
+        for (int i = 0; i < generations; i++) {
+            
             population.evolve();
-        }
-        IChromosome equipo = population.getFittestChromosome();
-        
-         List<Player> candidate = new LinkedList<Player>();
-        for (int i = 0; i < 15 ; i++ ) {
-            int player = (int) (equipo.getGene(i).getAllele()) -1;
-            if (player < catalogue.numGoalkeepers()) {
-                candidate.add(catalogue.getGoalkeeper(player) );  
-            }
-            else{
-                player = player - catalogue.numGoalkeepers();
-            }
-            if(player <  catalogue.numDefenders() ){
-                candidate.add(catalogue.getDefender(player));
-            }
-            else{
-                player = player - catalogue.numDefenders();
-            }
-            if(player < catalogue.numMidfielders()){
-                candidate.add(catalogue.getMidfielder(player));
-            }
-            else{
-                player = player - catalogue.numMidfielders();
-                candidate.add(catalogue.getStriker(player));
-            }
-        }
-        System.out.println("RETORNA ESTA LISTA " + candidate);
-        return candidate;
+
+            bestTeamSoFar = population.getFittestChromosome();
+        }       
+
+       return chromosomeToTeam(bestTeamSoFar, configuration, catalogue);
     }
 
 }
