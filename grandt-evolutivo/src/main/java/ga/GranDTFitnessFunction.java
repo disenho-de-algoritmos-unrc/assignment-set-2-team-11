@@ -13,37 +13,49 @@ import org.jgap.impl.IntegerGene;
 
 
 public class GranDTFitnessFunction extends FitnessFunction {
+
+    TeamConfiguration myTeam;
+
+   	PlayersCatalogue myCatalogue;
+
+    public GranDTFitnessFunction(TeamConfiguration team, PlayersCatalogue catalogue){
+    	this.myTeam = team;
+    	this.myCatalogue = catalogue;
+    }
+
+
     @Override
     protected double evaluate(IChromosome c) {
-        List<Player> team = new LinkedList<Player>();
-        for (int i = 0; i < 15 /* saber cuantos genes tiene un cromosoma*/; i++  ) {
-        	int player = (int)(c.getGene(i).getAllele());
-        	if ( player >= 0 && player < TeamGenerator.catalogue.numGoalkeepers() ) {
-        		Player current = TeamGenerator.catalogue.getGoalkeeper(player); 	
-        		}
-        	else if( player >= TeamGenerator.catalogue.numGoalkeepers() && player < TeamGenerator.catalogue.numGoalkeepers() + TeamGenerator.catalogue.numDefenders() ){
-        		Player current = TeamGenerator.catalogue.getDefender(player - TeamGenerator.catalogue.numGoalkeepers());
-        	}
-        	else if( player >= TeamGenerator.catalogue.numGoalkeepers() + TeamGenerator.catalogue.numDefenders() && player < TeamGenerator.catalogue.numGoalkeepers() + TeamGenerator.catalogue.numDefenders() + TeamGenerator.catalogue.numMidfielders()){
-        		Player current = TeamGenerator.catalogue.getMidfielder(player - TeamGenerator.catalogue.numGoalkeepers() - TeamGenerator.catalogue.numDefenders());
+       
+        List<Player> candidate = new LinkedList<Player>();
+        for (int i = 0; i < 15 ; i++ ) {
+        	int player = (int) (c.getGene(i).getAllele()) -1;
+        	if (player < myCatalogue.numGoalkeepers()) {
+        		candidate.add(myCatalogue.getGoalkeeper(player) ); 	
         	}
         	else{
-        		Player current = TeamGenerator.catalogue.getStriker( player - TeamGenerator.catalogue.numGoalkeepers() - TeamGenerator.catalogue.numDefenders() - TeamGenerator.catalogue.numMidfielders() );
+        		player = player - myCatalogue.numGoalkeepers();
         	}
-        	team.add(current);
+        	if(player <  myCatalogue.numDefenders() ){
+        		candidate.add(myCatalogue.getDefender(player));
+        	}
+        	else{
+        		player = player - myCatalogue.numDefenders();
+        	}
+        	if(player < myCatalogue.numMidfielders()){
+        		candidate.add(myCatalogue.getMidfielder(player));
+        	}
+        	else{
+        		player = player - myCatalogue.numMidfielders();
+        		candidate.add(myCatalogue.getStriker(player));
+        	}
         }
-
-
-        if (!isValidTeam(team)){
-        	return 0;
-        }
-        else{
-        	//Calcular que score suma, y si lo maximiza devolver el valor.
-        	double valor = 0;
-        	for (Player player: team ) {
-        	 	valor = valor + player.getScore();
-        	} 
-        	return valor;
-        }
+       
+        if (!myTeam.isValidTeam(candidate)) return 0;
+        double valor = 0;
+        for (Player player : candidate ) {
+                valor = valor + player.getScore();
+        } 
+        return valor;
     }
 }

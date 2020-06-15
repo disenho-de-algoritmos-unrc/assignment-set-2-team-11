@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="1" failures="1" name="ga.TeamGeneratorTest" time="91.191" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="java.vm.version" value="11.0.7+10-post-Ubuntu-2ubuntu218.04"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib"/>
+    <property name="maven.multiModuleProjectDirectory" value="/home/juan/Desktop/ProyectoAlg2/assignment-set-2-team-11/grandt-evolutivo"/>
+    <property name="java.vm.vendor" value="Ubuntu"/>
+    <property name="java.vendor.url" value="https://ubuntu.com/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=":"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/home/juan/Desktop/ProyectoAlg2/assignment-set-2-team-11/grandt-evolutivo"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="java.runtime.version" value="11.0.7+10-post-Ubuntu-2ubuntu218.04"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.name" value="Linux"/>
+    <property name="classworlds.conf" value="/usr/share/maven/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="maven.conf" value="/usr/share/maven/conf"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="55.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="4.15.0-106-generic"/>
+    <property name="library.jansi.path" value="/usr/share/maven/lib/jansi-native"/>
+    <property name="user.home" value="/home/juan"/>
+    <property name="user.timezone" value="America/Argentina/Cordoba"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="user.name" value="juan"/>
+    <property name="java.class.path" value="/usr/share/maven/boot/plexus-classworlds-2.x.jar"/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher package"/>
+    <property name="java.home" value="/usr/lib/jvm/java-11-openjdk-amd64"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.version" value="11.0.7"/>
+    <property name="securerandom.source" value="file:/dev/./urandom"/>
+    <property name="java.vendor" value="Ubuntu"/>
+    <property name="maven.home" value="/usr/share/maven"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.version.date" value="2020-04-14"/>
+    <property name="java.vendor.url.bug" value="https://bugs.launchpad.net/ubuntu/+source/openjdk-lts"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.desktop" value="gnome"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase classname="ga.TeamGeneratorTest" name="test" time="91.191">
+    <failure type="java.lang.AssertionError">java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:86)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at org.junit.Assert.assertTrue(Assert.java:52)
+	at ga.TeamGeneratorTest.test(TeamGeneratorTest.java:46)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+</failure>
+    <system-out>RETORNA ESTA LISTA [model.Player@302c971f, model.Player@1972e513, model.Player@7ae0a9ec, model.Player@35841320, model.Player@61c4eee0, model.Player@6f10d5b6, model.Player@1040be71, model.Player@548a24a, model.Player@433defed, model.Player@2a693f59, model.Player@3f4faf53, model.Player@7fd50002, model.Player@533bda92, model.Player@304bb45b, model.Player@723ca036, model.Player@25be7b63, model.Player@28dcca0c, model.Player@45d84a20, model.Player@52f27fbd, model.Player@4c163e3, model.Player@4a8355dd, model.Player@4d0d9fe7]
+Piovi, Ezequiel VOL
+Pereyra, Fabio DEF
+Sosa, Diego VOL
+Meli, Marcelo VOL
+Komar, Juan Cruz DEF
+González, Diego VOL
+Pinola, Javier DEF
+Moreno, Aníbal VOL
+Viatri, Lucas DEL
+Cabrera, Enzo DEL
+Gómez, Gastón ARQ
+Zambrano, Carlos DEF
+Almendra, Agustín VOL
+Bareiro, Mariano VOL
+Luna, Fernando VOL
+Bernabéi, Alexandro DEL
+Guiffrey, Germán DEF
+Mainero, Guido VOL
+Rodríguez, Lucas VOL
+Garcés, Facundo DEF
+Núñez, Gervasio VOL
+Palacios, Sebastián DEL
+RETORNA ESTA LISTA [model.Player@70cf32e3, model.Player@5a59ca5e, model.Player@4bdeaabb, model.Player@6c4906d3, model.Player@65987993, model.Player@71075444, model.Player@4f32a3ad, model.Player@6b695b06, model.Player@4d1bf319, model.Player@1040be71, model.Player@548a24a, model.Player@6f53b8a, model.Player@5c80cf32, model.Player@7d900ecf, model.Player@6f01b95f, model.Player@4007f65e, model.Player@1a245833, model.Player@673fdbce, model.Player@5965d37, model.Player@7a5ceedd, model.Player@4201c465, model.Player@5b799640]
+Romero, Braian DEL
+Scocco, Ignacio DEL
+Ferrario, Rafael ARQ
+Dubarbier, Sebastián DEF
+Carrera, Ramiro VOL
+Miño, Marcelo ARQ
+Salomón, Oscar DEF
+Allione, Agustín VOL
+Fernández, Gastón DEL
+Pinola, Javier DEF
+Moreno, Aníbal VOL
+Zárate, Mauro DEL
+Grahl, Francisco VOL
+Maciel, Emanuel VOL
+Necul, Lucas VOL
+Quiroz, Franco DEF
+Aliendro, Rodrigo VOL
+Coronel, Emanuel DEF
+Bravo, Federico VOL
+Becker, Pablo VOL
+Sivetti, Franco VOL
+Maidana, Braian VOL
+RETORNA ESTA LISTA [model.Player@3de8f619, model.Player@2ab4bc72, model.Player@4e5ed836, model.Player@eadd4fb, model.Player@740fb309, model.Player@7bd7d6d6, model.Player@43f02ef2, model.Player@239a307b, model.Player@2a8448fa, model.Player@6f204a1a, model.Player@2de56eb2, model.Player@5f8e8a9d, model.Player@5745ca0e, model.Player@3ad83a66, model.Player@3cce5371, model.Player@17bffc17, model.Player@6f01b95f, model.Player@6e535154, model.Player@15a34df2, model.Player@5b38c1ec]
+Pato, Matías DEL
+Ribas, Sebastián DEL
+Romero, Matías VOL
+Velasco, Alan DEL
+Chicco, Julián VOL
+Aguerre, Alan ARQ
+Fabra, Frank DEF
+Dátolo, Jesús VOL
+Belluschi, Fernando VOL
+Bonifacio, Ezequiel VOL
+Álvarez, Milton ARQ
+Quinteros, Franco DEF
+Fernández, José Luis VOL
+Alemán, Brahian VOL
+Palacios, Julián VOL
+Moya, Matías VOL
+Necul, Lucas VOL
+Janson, Lucas DEL
+Ortega, Francisco DEF
+Lo Celso, Francesco VOL
+RETORNA ESTA LISTA [model.Player@48e1f6c7, model.Player@55cb6996, model.Player@1807e3f6, model.Player@480d3575, model.Player@f1da57d, model.Player@194fad1, model.Player@26abb146, model.Player@35841320, model.Player@72c8e7b, model.Player@65f8f5ae, model.Player@48e1f6c7, model.Player@431cd9b2, model.Player@38467116, model.Player@5b7a7f33, model.Player@790da477, model.Player@5c7933ad, model.Player@57bc27f5, model.Player@5fb759d6, model.Player@4b8d604b, model.Player@5e7cd6cc, model.Player@68c9d179, model.Player@d554c5f, model.Player@2dfaea86, model.Player@15888343]
+Bertolo, Nicolás VOL
+Gissi, Dylan DEF
+Giménez, Nicolás VOL
+Martínez Quarta, Lucas DEF
+Fernández, Julián VOL
+Coloccini, Fabricio DEF
+Lemos, Damián VOL
+Meli, Marcelo VOL
+Sara, Guillermo ARQ
+Buffarini, Julio DEF
+Bertolo, Nicolás VOL
+Márquez, Fernando DEL
+Maldonado, Alexis DEF
+Erbes, Cristian VOL
+Corvalán, Claudio DEF
+Angileri, Fabrizio VOL
+González, Ángel VOL
+Almada, Thiago VOL
+Lux, Germán ARQ
+Manenti, Francisco DEF
+Marcone, Iván VOL
+Arzura, Joaquín VOL
+Rodríguez, Diego VOL
+Díaz, Mauro VOL
+RETORNA ESTA LISTA [model.Player@6e2829c7, model.Player@3feb2dda, model.Player@6a8658ff, model.Player@1c742ed4, model.Player@333d4a8c, model.Player@55de24cc, model.Player@dc7df28, model.Player@30f842ca, model.Player@69c81773, model.Player@4d14b6c2, model.Player@7e990ed7, model.Player@c05fddc, model.Player@25df00a0, model.Player@4d15107f, model.Player@7b4c50bc, model.Player@5884a914, model.Player@7a5ceedd, model.Player@50378a4, model.Player@60f00693, model.Player@79207381, model.Player@491b9b8]
+Negro, Brian DEF
+Soñora, Alan VOL
+Coniglio, Fernando DEL
+Ruiz Rodríguez, Ramiro DEL
+Vietto, Federico DEL
+Romero, Maximiliano DEL
+Antilef, Alejo VOL
+González, Emiliano ARQ
+Ortiz, Guillermo DEF
+Picco, Leonel VOL
+Rodríguez, Maximiliano VOL
+Silva, Santiago DEL
+Luna Diale, Mauro DEL
+Sibille, Kevin DEF
+Pérez, Pablo VOL
+Reniero, Nicolás DEL
+Becker, Pablo VOL
+Rodríguez, José Luis DEF
+Pasquini, Nicolás VOL
+De La Fuente, Hernán DEF
+Sosa, Santiago VOL
+RETORNA ESTA LISTA [model.Player@69c81773, model.Player@4d14b6c2, model.Player@aba625, model.Player@97e93f1, model.Player@5a5a729f, model.Player@4b520ea8, model.Player@16150369, model.Player@6b09fb41, model.Player@624ea235, model.Player@3932c79a, model.Player@782859e, model.Player@5884a914, model.Player@5f8e8a9d, model.Player@5745ca0e, model.Player@23f5b5dc, model.Player@34bde49d, model.Player@1b1cfb87, model.Player@821330f, model.Player@6f43c82]
+Ortiz, Guillermo DEF
+Picco, Leonel VOL
+García, Ariel Matías VOL
+Rodríguez, Jorge DEF
+Heredia, Leonardo VOL
+Giannetti, Lautaro DEF
+Colazo, Nicolás VOL
+Lomónaco, Sebastián DEL
+Ayala, David VOL
+Romero, Ángel DEL
+Arias, Junior DEL
+Reniero, Nicolás DEL
+Quinteros, Franco DEF
+Fernández, José Luis VOL
+Delgadillo, Nicolás DEL
+Coacci, Enzo VOL
+Leal, Luís DEL
+Silveira, Hugo DEL
+Bullaude, Ezequiel DEL
+RETORNA ESTA LISTA [model.Player@20b2475a, model.Player@7857fe2, model.Player@6f15d60e, model.Player@1be2019a, model.Player@29d80d2b, model.Player@58e1d9d, model.Player@446a1e84, model.Player@4f0f2942, model.Player@2657d4dd, model.Player@5340477f, model.Player@47caedad, model.Player@7139992f, model.Player@69504ae9, model.Player@dc7df28, model.Player@387a8303, model.Player@28cda624, model.Player@1500b2f3, model.Player@7eecb5b8, model.Player@126253fd, model.Player@57db2b13, model.Player@475c9c31, model.Player@6f53b8a, model.Player@23f5b5dc]
+Ibáñez, Nelson ARQ
+Izquierdoz, Carlos DEF
+Galoppo, Giuliano VOL
+Colman, Iván VOL
+Pizzicannella, Franco ARQ
+Angeleri, Marcos DEF
+Verón, Gonzalo VOL
+Benítez, Oliver DEF
+Blanco, Domingo VOL
+Cartagena, Wilder VOL
+Andrada, Juan VOL
+Chicco, Ignacio ARQ
+Zamponi, Rubén DEF
+Antilef, Alejo VOL
+Burdisso, Guillermo DEF
+González, Franco VOL
+Esquivel, Matías VOL
+Romero, Lucas VOL
+Fernández, Brian DEL
+Castro, Manuel VOL
+Sand, José DEL
+Zárate, Mauro DEL
+Delgadillo, Nicolás DEL
+RETORNA ESTA LISTA [model.Player@5276d6ee, model.Player@71687585, model.Player@1807f5a7, model.Player@4d1bf319, model.Player@1b919693, model.Player@1b919693, model.Player@4d15107f, model.Player@7b4c50bc, model.Player@30f842ca, model.Player@69c81773, model.Player@4d14b6c2, model.Player@7fb4f2a9, model.Player@4dc27487, model.Player@6a4f1a55, model.Player@7dfd3c81, model.Player@2584b82d, model.Player@70cf32e3, model.Player@20b2475a, model.Player@7857fe2, model.Player@6f15d60e, model.Player@7bbc8656, model.Player@6933b6c6, model.Player@7d3e8655, model.Player@7dfb0c0f, model.Player@626abbd0]
+Díaz, Cristian DEF
+Capaldo, Nicolás VOL
+Maggi, Iván DEL
+Fernández, Gastón DEL
+Pittón, Mauro VOL
+Pittón, Mauro VOL
+Sibille, Kevin DEF
+Pérez, Pablo VOL
+González, Emiliano ARQ
+Ortiz, Guillermo DEF
+Picco, Leonel VOL
+Andrada, Federico DEL
+Calderón, Franco DEF
+Zaracho, Matías VOL
+Barreto, Sergio DEF
+Pérez García, Matías VOL
+Romero, Braian DEL
+Ibáñez, Nelson ARQ
+Izquierdoz, Carlos DEF
+Galoppo, Giuliano VOL
+Centurión, Ricardo VOL
+Andrade, Walter DEF
+Vieyra, Juan Ignacio VOL
+Mac Allister, Kevin DEF
+Ibarra, Franco VOL
+RETORNA ESTA LISTA [model.Player@3aa078fd, model.Player@d23e042, model.Player@46d59067, model.Player@2d0399f4, model.Player@14dd7b39, model.Player@491b9b8, model.Player@25be7b63, model.Player@66ea810, model.Player@6cd24612, model.Player@5dafbe45, model.Player@2254127a, model.Player@51891008, model.Player@2f953efd, model.Player@f68f0dc, model.Player@d2de489, model.Player@14bdbc74, model.Player@12591ac8, model.Player@2a8448fa, model.Player@790da477, model.Player@5c7933ad, model.Player@5884a914, model.Player@782859e]
+Herrera, Jonathan DEL
+Chávez, Andrés DEL
+Abero, Mathías DEF
+Ramírez, Sebastián VOL
+Gutiérrez, Jonás VOL
+Sosa, Santiago VOL
+Bernabéi, Alexandro DEL
+Bíttolo, Mariano DEF
+Bogado, Mauro VOL
+Peralta Bauer, Mariano DEL
+Escudero, Matías DEF
+Mercado, Diego VOL
+Di Lorenzo, Juan Antonio DEF
+Alanís, Gabriel VOL
+Schmidt, Damián DEF
+Bernardi, Christian VOL
+Urribarri, Bruno DEF
+Belluschi, Fernando VOL
+Corvalán, Claudio DEF
+Angileri, Fabrizio VOL
+Reniero, Nicolás DEL
+Arias, Junior DEL
+RETORNA ESTA LISTA [model.Player@41330d4f, model.Player@1b66c0fb, model.Player@3e0e1046, model.Player@24c1b2d2, model.Player@7dc19a70, model.Player@508dec2b, model.Player@673fdbce, model.Player@5965d37, model.Player@eadd4fb, model.Player@1e4f4a5c, model.Player@71687585, model.Player@7bbc8656, model.Player@37313c65, model.Player@465232e9, model.Player@798162bc, model.Player@1df8da7a, model.Player@304bb45b, model.Player@23941fb4, model.Player@7486b455, model.Player@660acfb, model.Player@5d908d47, model.Player@4c163e3, model.Player@4a8355dd]
+Quintana, Carlos DEF
+Mac Allister, Francis VOL
+Morales, Lautaro ARQ
+Alonso, Junior DEF
+Rojas, Ariel VOL
+Zurbriggen, Juan Cruz DEL
+Coronel, Emanuel DEF
+Bravo, Federico VOL
+Velasco, Alan DEL
+Vella, Leandro VOL
+Capaldo, Nicolás VOL
+Centurión, Ricardo VOL
+Romero, Zaid DEF
+Mascherano, Javier VOL
+González, Cristian DEF
+Rodríguez, Denis VOL
+Bareiro, Mariano VOL
+Gago, Fernando VOL
+Díaz, Alexander DEL
+De La Cruz, Nicolás VOL
+Sosa, Alan ARQ
+Garcés, Facundo DEF
+Núñez, Gervasio VOL
+RETORNA ESTA LISTA [model.Player@7fd50002, model.Player@533bda92, model.Player@491b9b8, model.Player@1c9b0314, model.Player@2ab4bc72, model.Player@6f01b95f, model.Player@45385f75, model.Player@aba625, model.Player@49c90a9c, model.Player@34bde49d, model.Player@50378a4, model.Player@60f00693, model.Player@2d29b4ee, model.Player@7e990ed7, model.Player@71075444, model.Player@4f32a3ad, model.Player@6b695b06, model.Player@69ee81fc, model.Player@6e2aa843, model.Player@465232e9, model.Player@6933b6c6, model.Player@7d3e8655]
+Zambrano, Carlos DEF
+Almendra, Agustín VOL
+Sosa, Santiago VOL
+Linares, Nicolás VOL
+Ribas, Sebastián DEL
+Necul, Lucas VOL
+Navarro, Ezequiel DEF
+García, Ariel Matías VOL
+Pérez, Facundo VOL
+Coacci, Enzo VOL
+Rodríguez, José Luis DEF
+Pasquini, Nicolás VOL
+Soldano, Franco DEL
+Rodríguez, Maximiliano VOL
+Miño, Marcelo ARQ
+Salomón, Oscar DEF
+Allione, Agustín VOL
+Almada, Facundo DEF
+Rivero, Braian VOL
+Mascherano, Javier VOL
+Andrade, Walter DEF
+Vieyra, Juan Ignacio VOL
+RETORNA ESTA LISTA [model.Player@1224144a, model.Player@29f7cefd, model.Player@700fb871, model.Player@3b35a229, model.Player@9816741, model.Player@1e16c0aa, model.Player@13d73f29, model.Player@565f390, model.Player@7dc3712, model.Player@2f67a4d3, model.Player@5e3f861, model.Player@2fb0623e, model.Player@47caedad, model.Player@49b2a47d, model.Player@4d14b6c2, model.Player@7bd7d6d6, model.Player@43f02ef2, model.Player@239a307b, model.Player@5be1d0a4, model.Player@415b0b49, model.Player@6d5620ce, model.Player@311bf055, model.Player@642a7222, model.Player@7d322cad]
+Evangelista, Fernando DEF
+Bertoglio, Facundo VOL
+Merolla, Lucas DEF
+Chávez, Lautaro VOL
+Martínez, Román VOL
+Rosales, Pablo Mauricio DEF
+Cardozo, Neri VOL
+Álvarez, Pablo DEF
+Moyano, Franco VOL
+Miranda, Leonel VOL
+De Los Santos, Matías DEF
+Zuculini, Bruno VOL
+Andrada, Juan VOL
+Leyes, Nery VOL
+Picco, Leonel VOL
+Aguerre, Alan ARQ
+Fabra, Frank DEF
+Dátolo, Jesús VOL
+Unsain, Ezequiel ARQ
+Lagos, Agustín DEF
+Méndez, Emiliano VOL
+Fernández, Leandro DEL
+Barbona, David VOL
+Cérica, Ezequiel DEL
+RETORNA ESTA LISTA [model.Player@78452606, model.Player@147e2ae7, model.Player@448c8166, model.Player@4470fbd6, model.Player@15d49048, model.Player@723ca036, model.Player@7098b907, model.Player@503f91c3, model.Player@13526e59, model.Player@2235eaab, model.Player@6f01b95f, model.Player@4e5ed836, model.Player@1500b2f3, model.Player@17503f6b, model.Player@3bcd05cb, model.Player@3b6d844d, model.Player@36804139, model.Player@20bd8be5, model.Player@97e93f1, model.Player@5a5a729f, model.Player@730d2164, model.Player@24959ca4, model.Player@10289886, model.Player@5c86dbc5, model.Player@9816741]
+Martínez, Federico VOL
+Gallardo, Nahuel DEF
+Farías, Facundo VOL
+Briasco, Norberto DEL
+Donatti, Alejandro DEF
+Luna, Fernando VOL
+Salazar, Víctor DEF
+Alcaraz, Carlos VOL
+Andújar, Mariano ARQ
+Monzón, Fabián DEF
+Necul, Lucas VOL
+Romero, Matías VOL
+Esquivel, Matías VOL
+Casco, Milton DEF
+Vera, Lucas VOL
+Barreto, José DEL
+Moreno, Dayro DEL
+Campaña, Martín ARQ
+Rodríguez, Jorge DEF
+Heredia, Leonardo VOL
+Urzi, Agustín DEL
+Camacho, Washington VOL
+Sappa, Daniel ARQ
+Villalba, Lucas DEF
+Martínez, Román VOL
+RETORNA ESTA LISTA [model.Player@1a5a4e19, model.Player@9816741, model.Player@7068e664, model.Player@60db1c0e, model.Player@3e78b6a5, model.Player@43f02ef2, model.Player@239a307b, model.Player@769a1df5, model.Player@41f69e84, model.Player@7975d1d8, model.Player@2438dcd, model.Player@1be2019a, model.Player@7068e664, model.Player@24105dc5, model.Player@5167f57d, model.Player@64b0598, model.Player@18f8cd79, model.Player@13d73f29, model.Player@24959ca4, model.Player@3e2055d6]
+López, Edwar DEL
+Martínez, Román VOL
+Benavídez, Carlos VOL
+Montero, Fausto VOL
+Bolívar, Agustín VOL
+Fabra, Frank DEF
+Dátolo, Jesús VOL
+Contín, Nicolás DEL
+Curruhinca, Agustín VOL
+Arboleda, Iván Mauricio ARQ
+Centurión, Maximiliano DEF
+Colman, Iván VOL
+Benavídez, Carlos VOL
+Rivero, Alejandro ARQ
+Miers, Marcos DEF
+Maciel, Leandro VOL
+Loaiza, Raúl VOL
+Cardozo, Neri VOL
+Camacho, Washington VOL
+López, Lisandro DEL
+RETORNA ESTA LISTA [model.Player@7eecb5b8, model.Player@29d80d2b, model.Player@58e1d9d, model.Player@446a1e84, model.Player@49b2a47d, model.Player@46d59067, model.Player@2d0399f4, model.Player@50f6ac94, model.Player@6cc4cdb9, model.Player@28194a50, model.Player@302c971f, model.Player@10289886, model.Player@5c86dbc5, model.Player@9816741, model.Player@7f2cfe3f, model.Player@1a5b6f42, model.Player@5038d0b5, model.Player@32115b28, model.Player@2ad48653, model.Player@302c971f, model.Player@6bb4dd34, model.Player@7d9f158f, model.Player@45efd90f, model.Player@4b8729ff, model.Player@f68f0dc]
+Romero, Lucas VOL
+Pizzicannella, Franco ARQ
+Angeleri, Marcos DEF
+Verón, Gonzalo VOL
+Leyes, Nery VOL
+Abero, Mathías DEF
+Ramírez, Sebastián VOL
+Rodríguez, Joao DEL
+García, Rafael DEF
+Romero, Emmanuel VOL
+Piovi, Ezequiel VOL
+Sappa, Daniel ARQ
+Villalba, Lucas DEF
+Martínez, Román VOL
+Alustiza, Matías DEL
+Civelli, Renato DEF
+Albornoz, Camilo VOL
+Álvarez, Juan VOL
+Ortiz, Marcelo DEF
+Piovi, Ezequiel VOL
+Fernández, Ignacio VOL
+Díaz, Marcos ARQ
+Sandoval, Jonathan DEF
+Miljevic, Matko VOL
+Alanís, Gabriel VOL
+RETORNA ESTA LISTA [model.Player@7dfb0c0f, model.Player@626abbd0, model.Player@383dc82c, model.Player@4a07d605, model.Player@1b66c0fb, model.Player@74287ea3, model.Player@2ad48653, model.Player@302c971f, model.Player@1040be71, model.Player@548a24a, model.Player@7d7758be, model.Player@24959ca4, model.Player@2bdd8394, model.Player@5f9edf14, model.Player@1c9b0314, model.Player@68746f22, model.Player@2f01783a, model.Player@68878f6d, model.Player@3e78b6a5, model.Player@41488b16, model.Player@a8ef162, model.Player@2eea88a1, model.Player@7ac296f6]
+Mac Allister, Kevin DEF
+Ibarra, Franco VOL
+Araujo, Aldo DEL
+Parisi, Lautaro DEL
+Mac Allister, Francis VOL
+Pourtau, Jerónimo ARQ
+Ortiz, Marcelo DEF
+Piovi, Ezequiel VOL
+Pinola, Javier DEF
+Moreno, Aníbal VOL
+Vega, Cristian VOL
+Camacho, Washington VOL
+Arias, Gabriel ARQ
+Molina Lucero, Nahuel DEF
+Linares, Nicolás VOL
+Romero, Silvio DEL
+Romero, Óscar VOL
+García, Santiago DEL
+Bolívar, Agustín VOL
+Olses, Carlos ARQ
+Bay, Jonathan DEF
+Campuzano, Jorman VOL
+Leguizamón, Nicolás DEL
+RETORNA ESTA LISTA [model.Player@78fa769e, model.Player@6e2aa843, model.Player@16612a51, model.Player@54e041a4, model.Player@2c78324b, model.Player@aba625, model.Player@79defdc, model.Player@18317edc, model.Player@49b2a47d, model.Player@4e0ae11f, model.Player@238d68ff, model.Player@4b86805d, model.Player@5852c06f, model.Player@4149c063, model.Player@9cb8225, model.Player@76b07f29, model.Player@38af9828, model.Player@376a0d86, model.Player@6933b6c6, model.Player@7d3e8655, model.Player@62656be4, model.Player@2f953efd, model.Player@f68f0dc]
+Poblete, Gerónimo VOL
+Rivero, Braian VOL
+González, Lucas VOL
+Borré, Rafael Santos DEL
+Parede, Guilherme DEL
+García, Ariel Matías VOL
+Ibáñez, Matías ARQ
+Mas, Emmanuel DEF
+Leyes, Nery VOL
+Cecchini, Emanuel VOL
+Lucchetti, Cristian ARQ
+Aleo, Agustín DEF
+Ruiz, Alan VOL
+Burián, Leonardo ARQ
+Torrent, Fernando DEF
+Álvarez Suárez, Gastón VOL
+Cortizo, Pablo VOL
+Rodríguez, Luis DEL
+Andrade, Walter DEF
+Vieyra, Juan Ignacio VOL
+Tijanovich, Horacio DEL
+Di Lorenzo, Juan Antonio DEF
+Alanís, Gabriel VOL
+RETORNA ESTA LISTA [model.Player@34129c78, model.Player@7d61eb55, model.Player@6cc4cdb9, model.Player@28194a50, model.Player@740fb309, model.Player@222a59e6, model.Player@6c7a164b, model.Player@4c2bb6e0, model.Player@60db1c0e, model.Player@3e62d773, model.Player@4ef74c30, model.Player@7283d3eb, model.Player@433defed, model.Player@638ef7ed, model.Player@508dec2b, model.Player@6f01b95f, model.Player@4bff7da0, model.Player@333d4a8c]
+Domínguez, Nery VOL
+Díaz, Marcelo VOL
+García, Rafael DEF
+Romero, Emmanuel VOL
+Chicco, Julián VOL
+Pérez, Franco DEL
+Roffo, Manuel ARQ
+Torrén, Miguel Ángel DEF
+Montero, Fausto VOL
+Fértoli, Héctor DEL
+Garro, Juan Fernando DEL
+Togni, Gastón DEL
+Viatri, Lucas DEL
+Ayala, Víctor VOL
+Zurbriggen, Juan Cruz DEL
+Necul, Lucas VOL
+Núñez, Cristian VOL
+Vietto, Federico DEL
+RETORNA ESTA LISTA [model.Player@548a24a, model.Player@821330f, model.Player@47c81abf, model.Player@71075444, model.Player@4f32a3ad, model.Player@6b695b06, model.Player@5a59ca5e, model.Player@46d59067, model.Player@2d0399f4, model.Player@776a6d9b, model.Player@21d03963, model.Player@47c81abf, model.Player@1f760b47, model.Player@790da477, model.Player@5c7933ad, model.Player@7975d1d8, model.Player@2438dcd, model.Player@1be2019a, model.Player@eadd4fb, model.Player@18ece7f4, model.Player@3cce57c7, model.Player@1cf56a1c]
+Moreno, Aníbal VOL
+Silveira, Hugo DEL
+Melano, Lucas DEL
+Miño, Marcelo ARQ
+Salomón, Oscar DEF
+Allione, Agustín VOL
+Scocco, Ignacio DEL
+Abero, Mathías DEF
+Ramírez, Sebastián VOL
+Cuello, Tomás VOL
+Isa Luna, Kevin DEL
+Melano, Lucas DEL
+Orellano, Luca DEL
+Corvalán, Claudio DEF
+Angileri, Fabrizio VOL
+Arboleda, Iván Mauricio ARQ
+Centurión, Maximiliano DEF
+Colman, Iván VOL
+Velasco, Alan DEL
+Bravo, Claudio DEF
+Aguirre, Nicolás VOL
+Garré, Benjamín DEL
+RETORNA ESTA LISTA [model.Player@264f218, model.Player@3576ddc2, model.Player@35b74c5c, model.Player@2e570ded, model.Player@b86de0d, model.Player@81d9a72, model.Player@17bffc17, model.Player@747f281, model.Player@1f760b47, model.Player@2de56eb2, model.Player@5f8e8a9d, model.Player@5745ca0e, model.Player@3b35a229, model.Player@28cda624, model.Player@1169afe1, model.Player@740fb309, model.Player@2ca26d77, model.Player@4808bc9b, model.Player@d554c5f, model.Player@7d322cad, model.Player@1500b2f3, model.Player@aba625, model.Player@70e38ce1, model.Player@41330d4f, model.Player@1b66c0fb]
+Colombo, Nazareno DEF
+Pierotti, Santiago VOL
+Bianchi, Bruno DEF
+Galeano, Juan VOL
+García, Javier ARQ
+Weigandt, Marcelo DEF
+Moya, Matías VOL
+Bordagaray, Fabián DEL
+Orellano, Luca DEL
+Álvarez, Milton ARQ
+Quinteros, Franco DEF
+Fernández, José Luis VOL
+Chávez, Lautaro VOL
+González, Franco VOL
+Martínez, Damián DEF
+Chicco, Julián VOL
+Albertengo, Lucas DEL
+Valenti, Lautaro DEF
+Arzura, Joaquín VOL
+Cérica, Ezequiel DEL
+Esquivel, Matías VOL
+García, Ariel Matías VOL
+Andrada, Esteban ARQ
+Quintana, Carlos DEF
+Mac Allister, Francis VOL
+RETORNA ESTA LISTA [model.Player@1ebea008, model.Player@38af9828, model.Player@72d6b3ba, model.Player@740fb309, model.Player@222a59e6, model.Player@7fb4f2a9, model.Player@1787f2a0, model.Player@7de62196, model.Player@4e0ae11f, model.Player@163370c2, model.Player@1a5b6f42, model.Player@5038d0b5, model.Player@51bf5add, model.Player@55cb6996, model.Player@1807e3f6, model.Player@7905a0b8, model.Player@638ef7ed, model.Player@5e3f861, model.Player@2fb0623e, model.Player@723ca036, model.Player@2a8448fa]
+Vargas, Jesús DEL
+Cortizo, Pablo VOL
+Andrada, Luca VOL
+Chicco, Julián VOL
+Pérez, Franco DEL
+Andrada, Federico DEL
+López Quintana, Mario DEF
+Indacoechea, Joaquín VOL
+Cecchini, Emanuel VOL
+Ramírez, Roberto ARQ
+Civelli, Renato DEF
+Albornoz, Camilo VOL
+Ramírez, Eric VOL
+Gissi, Dylan DEF
+Giménez, Nicolás VOL
+Cosciuc, Fernando DEF
+Ayala, Víctor VOL
+De Los Santos, Matías DEF
+Zuculini, Bruno VOL
+Luna, Fernando VOL
+Belluschi, Fernando VOL
+RETORNA ESTA LISTA [model.Player@13d9cbf5, model.Player@1a5b6f42, model.Player@5038d0b5, model.Player@2a8448fa, model.Player@478db956, model.Player@6ca18a14, model.Player@264f218, model.Player@3576ddc2, model.Player@c667f46, model.Player@51bd8b5c, model.Player@7b50df34, model.Player@1b410b60, model.Player@2462cb01, model.Player@19b843ba, model.Player@38467116, model.Player@5b7a7f33, model.Player@78452606, model.Player@2462cb01, model.Player@19b843ba, model.Player@311bf055, model.Player@64ec96c6, model.Player@77659b30, model.Player@456d6c1e]
+Assís, Sebastián VOL
+Civelli, Renato DEF
+Albornoz, Camilo VOL
+Belluschi, Fernando VOL
+Sequeira, Luis VOL
+Villa, Sebastián DEL
+Colombo, Nazareno DEF
+Pierotti, Santiago VOL
+Benítez, Marcelo DEF
+Chancalay, Tomás VOL
+Lértora, Federico VOL
+Sarmiento, Darío VOL
+Herrera, Andrés DEF
+Miloc, Dardo VOL
+Maldonado, Alexis DEF
+Erbes, Cristian VOL
+Martínez, Federico VOL
+Herrera, Andrés DEF
+Miloc, Dardo VOL
+Fernández, Leandro DEL
+Navarro, Nicolás ARQ
+Vera Oviedo, Hugo DEF
+Cristaldo, Franco VOL
+RETORNA ESTA LISTA [model.Player@4f32a3ad, model.Player@6b695b06, model.Player@452e19ca, model.Player@72c8e7b, model.Player@65f8f5ae, model.Player@48e1f6c7, model.Player@7bbc8656, model.Player@10289886, model.Player@5c86dbc5, model.Player@9816741, model.Player@29d80d2b, model.Player@58e1d9d, model.Player@446a1e84, model.Player@12591ac8, model.Player@2a8448fa, model.Player@9cb8225, model.Player@76b07f29, model.Player@6b0d80ed, model.Player@34129c78, model.Player@4808bc9b, model.Player@d554c5f, model.Player@740fb309, model.Player@6f8e8894, model.Player@3cfdd820, model.Player@928763c, model.Player@e25951c, model.Player@38af9828, model.Player@503f91c3, model.Player@626abbd0]
+Salomón, Oscar DEF
+Allione, Agustín VOL
+Ojeda, Martín VOL
+Sara, Guillermo ARQ
+Buffarini, Julio DEF
+Bertolo, Nicolás VOL
+Centurión, Ricardo VOL
+Sappa, Daniel ARQ
+Villalba, Lucas DEF
+Martínez, Román VOL
+Pizzicannella, Franco ARQ
+Angeleri, Marcos DEF
+Verón, Gonzalo VOL
+Urribarri, Bruno DEF
+Belluschi, Fernando VOL
+Torrent, Fernando DEF
+Álvarez Suárez, Gastón VOL
+Godoy, Leonardo DEF
+Domínguez, Nery VOL
+Valenti, Lautaro DEF
+Arzura, Joaquín VOL
+Chicco, Julián VOL
+Peano, Marcos ARQ
+Escobar, Gonzalo DEF
+Montenegro, Mateo VOL
+Arias, Ramón DEF
+Cortizo, Pablo VOL
+Alcaraz, Carlos VOL
+Ibarra, Franco VOL
+RETORNA ESTA LISTA [model.Player@6c7a164b, model.Player@4c2bb6e0, model.Player@60db1c0e, model.Player@2de56eb2, model.Player@5f8e8a9d, model.Player@5745ca0e, model.Player@58e1d9d, model.Player@446a1e84, model.Player@dc9876b, model.Player@2f666ebb, model.Player@415b0b49, model.Player@6d5620ce, model.Player@5c86dbc5, model.Player@9816741, model.Player@2438dcd, model.Player@1be2019a, model.Player@d23e042, model.Player@19976a65, model.Player@a1f72f5, model.Player@4b2c5e02, model.Player@7d7758be, model.Player@565f390, model.Player@7dc3712, model.Player@25df00a0, model.Player@6f43c82, model.Player@57a3e26a]
+Roffo, Manuel ARQ
+Torrén, Miguel Ángel DEF
+Montero, Fausto VOL
+Álvarez, Milton ARQ
+Quinteros, Franco DEF
+Fernández, José Luis VOL
+Angeleri, Marcos DEF
+Verón, Gonzalo VOL
+Mena, Eugenio DEF
+Belmonte, Tomás VOL
+Lagos, Agustín DEF
+Méndez, Emiliano VOL
+Villalba, Lucas DEF
+Martínez, Román VOL
+Centurión, Maximiliano DEF
+Colman, Iván VOL
+Chávez, Andrés DEL
+Bottinelli, Jonathan DEF
+Solari, Augusto VOL
+Suárez, Matías DEL
+Vega, Cristian VOL
+Álvarez, Pablo DEF
+Moyano, Franco VOL
+Luna Diale, Mauro DEL
+Bullaude, Ezequiel DEL
+Castro, Nicolás VOL
+RETORNA ESTA LISTA [model.Player@2dc9b0f5, model.Player@6531a794, model.Player@3b5fad2d, model.Player@5e17553a, model.Player@503f91c3, model.Player@790da477, model.Player@5c7933ad, model.Player@1c742ed4, model.Player@18317edc, model.Player@49b2a47d, model.Player@3eb91815, model.Player@56dc1551, model.Player@4b2c5e02, model.Player@102cec62, model.Player@24959ca4, model.Player@74f6c5d8, model.Player@27912e3, model.Player@34b9f960, model.Player@7283d3eb, model.Player@43015c69, model.Player@19b89d4, model.Player@4bbf6d0e]
+Ferroni, Leonel DEF
+Fernández, Guillermo VOL
+Cabral, Jonathan DEF
+Carabajal, Mateo VOL
+Alcaraz, Carlos VOL
+Corvalán, Claudio DEF
+Angileri, Fabrizio VOL
+Ruiz Rodríguez, Ramiro DEL
+Mas, Emmanuel DEF
+Leyes, Nery VOL
+Abram, Luis DEF
+Pérez, Enzo VOL
+Suárez, Matías DEL
+Rojo, Marcos DEF
+Camacho, Washington VOL
+Solís, Nazareno DEL
+Navarro, Federico VOL
+Montoya, Walter VOL
+Togni, Gastón DEL
+Menossi, Lucas VOL
+Caire, Maximiliano DEF
+Escalante, Tomás VOL
+RETORNA ESTA LISTA [model.Player@5f9edf14, model.Player@1c9b0314, model.Player@2415fc55, model.Player@14f232c4, model.Player@5c80cf32, model.Player@13bc8645, model.Player@24c22fe, model.Player@93081b6, model.Player@cd1e646, model.Player@2d29b4ee, model.Player@446a1e84, model.Player@7ba8c737, model.Player@16612a51, model.Player@1890516e, model.Player@47caedad, model.Player@d2de489, model.Player@14bdbc74, model.Player@15a04efb, model.Player@15888343]
+Molina Lucero, Nahuel DEF
+Linares, Nicolás VOL
+Aliseda, Ignacio DEL
+Rodríguez, Alexis VOL
+Grahl, Francisco VOL
+Rollheiser, Benjamín DEL
+Velázquez, Pablo DEL
+Cacciabue, Jerónimo VOL
+Quintero, Juan VOL
+Soldano, Franco DEL
+Verón, Gonzalo VOL
+Chimino, Cristian DEF
+González, Lucas VOL
+Miracco, Nicolás DEL
+Andrada, Juan VOL
+Schmidt, Damián DEF
+Bernardi, Christian VOL
+Arena, Nahuel DEF
+Díaz, Mauro VOL
+RETORNA ESTA LISTA [model.Player@3eb91815, model.Player@56dc1551, model.Player@31edaa7d, model.Player@26adfd2d, model.Player@2ad48653, model.Player@302c971f, model.Player@2f666ebb, model.Player@43015c69, model.Player@7b50df34, model.Player@3336e6b6, model.Player@7c3fdb62, model.Player@205d38da, model.Player@6950ed69, model.Player@49c90a9c, model.Player@14f232c4, model.Player@304bb45b, model.Player@6dd7b5a3, model.Player@7a5ceedd, model.Player@6f3187b0]
+Abram, Luis DEF
+Pérez, Enzo VOL
+Martínez, Pablo DEL
+Farioli, Brian VOL
+Ortiz, Marcelo DEF
+Piovi, Ezequiel VOL
+Belmonte, Tomás VOL
+Menossi, Lucas VOL
+Lértora, Federico VOL
+Montiel, Gonzalo DEF
+Formica, Mauro VOL
+Cañete, Ezequiel DEL
+Sigali, Leonardo DEF
+Pérez, Facundo VOL
+Rodríguez, Alexis VOL
+Bareiro, Mariano VOL
+Ávalos, Gabriel DEL
+Becker, Pablo VOL
+Tévez, Carlos DEL
+RETORNA ESTA LISTA [model.Player@189cbd7c, model.Player@7d61eb55, model.Player@41f69e84, model.Player@4d1bf319, model.Player@7bf3a5d8, model.Player@5a5a729f, model.Player@2d29b4ee, model.Player@42e25b0b, model.Player@39b43d60, model.Player@44be0077, model.Player@2205a05d, model.Player@72ef8d15, model.Player@6aa8e115, model.Player@5e21e98f, model.Player@51a9ad5e, model.Player@51bf5add, model.Player@5f20155b, model.Player@72ade7e3, model.Player@239105a8, model.Player@3fce8fd9]
+Gandolfi, Javier DEF
+Díaz, Marcelo VOL
+Curruhinca, Agustín VOL
+Fernández, Gastón DEL
+Orsini, Nicolás DEL
+Heredia, Leonardo VOL
+Soldano, Franco DEL
+Callegari, Stefano DEF
+Cabral, Rodrigo VOL
+Rinaudo, Fabián VOL
+Vera, Fausto VOL
+Estigarribia, Marcelo VOL
+Salvio, Eduardo VOL
+Zárate, Tobías DEL
+Bustos, Fabricio DEF
+Ramírez, Eric VOL
+González, Federico DEL
+Cambeses, Facundo ARQ
+Gómez, Elías DEF
+Florentín, Gabriel VOL
+RETORNA ESTA LISTA [model.Player@45385f75, model.Player@aba625, model.Player@194fad1, model.Player@26abb146, model.Player@560348e6, model.Player@1df8b5b8, model.Player@5d908d47, model.Player@4c163e3, model.Player@4a8355dd, model.Player@23202fce, model.Player@1e4f4a5c, model.Player@7b993c65, model.Player@6f43c82, model.Player@13bc8645, model.Player@29f7cefd, model.Player@37911f88, model.Player@6f1c29b7, model.Player@4d6025c5, model.Player@1169afe1, model.Player@740fb309, model.Player@7f284218, model.Player@407a7f2a, model.Player@4ea5b703, model.Player@2a7ed1f, model.Player@13526e59, model.Player@2235eaab, model.Player@6f01b95f]
+Navarro, Ezequiel DEF
+García, Ariel Matías VOL
+Coloccini, Fabricio DEF
+Lemos, Damián VOL
+Fuentes, Juan DEF
+Acevedo, Nelson VOL
+Sosa, Alan ARQ
+Garcés, Facundo DEF
+Núñez, Gervasio VOL
+Thaller, Nicolás DEF
+Vella, Leandro VOL
+Gutiérrez, Kevin VOL
+Bullaude, Ezequiel DEL
+Rollheiser, Benjamín DEL
+Bertoglio, Facundo VOL
+Insfrán, Nelson ARQ
+Arciero, Rodrigo DEF
+Acosta, Guillermo VOL
+Martínez, Damián DEF
+Chicco, Julián VOL
+Toledo, Javier DEL
+Ferrari, Gianluca DEF
+Gómez, Iván VOL
+Sandoval, Tomás DEL
+Andújar, Mariano ARQ
+Monzón, Fabián DEF
+Necul, Lucas VOL
+RETORNA ESTA LISTA [model.Player@4f4c4b1a, model.Player@723e88f9, model.Player@5f0fd5a0, model.Player@64e7619d, model.Player@495ee280, model.Player@4fa1c212, model.Player@7d7758be, model.Player@24959ca4, model.Player@34129c78, model.Player@6ea2bc93, model.Player@723ca036, model.Player@3116c353, model.Player@f627d13, model.Player@4e5ed836, model.Player@4e928fbf, model.Player@352ff4da, model.Player@3224a577, model.Player@2e32ccc5, model.Player@5a5a729f, model.Player@748741cb, model.Player@32115b28, model.Player@3e78b6a5]
+Lucero, Juan Martín DEL
+Ojeda, Emmanuel VOL
+Herrera, Guido ARQ
+Delgado, Rafael DEF
+Gallucci Otero, Santiago VOL
+Barrios, Lucas DEL
+Vega, Cristian VOL
+Camacho, Washington VOL
+Domínguez, Nery VOL
+Hausch, Agustín DEL
+Luna, Fernando VOL
+Cavallotti, Maximiliano ARQ
+Papa, Emiliano DEF
+Romero, Matías VOL
+Pocrnjic, Luciano ARQ
+Fara, Caín DEF
+Gil Romero, Gastón VOL
+Candia, Jhonatan DEL
+Heredia, Leonardo VOL
+Ávila, Gastón DEF
+Álvarez, Juan VOL
+Bolívar, Agustín VOL
+</system-out>
+  </testcase>
+</testsuite>

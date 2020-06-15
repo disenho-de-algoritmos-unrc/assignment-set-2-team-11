@@ -29,7 +29,9 @@ public class TeamGeneratorTest {
         int iteration = 1;
         while (iteration <= maxIterations && !validTeamObtained) {
             List<Player> result = generator.generateTeam();
-            
+            for (Player player: result) {
+                System.out.println(player.getName() + " " + player.getPosition());
+            }        
             if (configuration.isValidTeam(result)) {
                 validTeamObtained = true;
                 // in case you want to see the team... uncomment the following

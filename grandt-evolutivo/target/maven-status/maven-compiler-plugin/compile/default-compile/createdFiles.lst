@@ -1,0 +1,8 @@
+model/PlayersCatalogue.class
+model/TeamConfiguration$1.class
+model/PlayersCatalogue$1.class
+ga/TeamGenerator.class
+model/Position.class
+ga/GranDTFitnessFunction.class
+model/TeamConfiguration.class
+model/Player.class

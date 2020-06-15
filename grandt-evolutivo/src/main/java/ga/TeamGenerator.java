@@ -45,10 +45,11 @@ public class TeamGenerator {
      */
     public List<Player> generateTeam() throws InvalidConfigurationException {
         Configuration conf = new DefaultConfiguration();
+        conf.reset();
         conf.setPreservFittestIndividual(true);
         conf.setKeepPopulationSizeConstant(false);
         FitnessFunction myFunc =
-                new GranDTFitnessFunction(  );
+                new GranDTFitnessFunction(this.configuration,this.catalogue);
         conf.setFitnessFunction( myFunc );
         Gene[] sampleGenes = new Gene[ 15 ];
         sampleGenes[0] = new IntegerGene(conf,1,707);
@@ -69,14 +70,39 @@ public class TeamGenerator {
         Chromosome sampleChromosome = new Chromosome(conf, sampleGenes);
         conf.setSampleChromosome( sampleChromosome );
 
-        conf.setPopulationSize( 500 );
+        conf.setPopulationSize( 3000 );
         Genotype population = Genotype.randomInitialGenotype(conf);
         int MAX_ALLOWED_EVOLUTION = 30;
         for (int i = 0; i<=MAX_ALLOWED_EVOLUTION; i++) {
             population.evolve();
         }
-        IChromosome equipo =population.getFittestChromosome();
-        return null;
+        IChromosome equipo = population.getFittestChromosome();
+        
+         List<Player> candidate = new LinkedList<Player>();
+        for (int i = 0; i < 15 ; i++ ) {
+            int player = (int) (equipo.getGene(i).getAllele()) -1;
+            if (player < catalogue.numGoalkeepers()) {
+                candidate.add(catalogue.getGoalkeeper(player) );  
+            }
+            else{
+                player = player - catalogue.numGoalkeepers();
+            }
+            if(player <  catalogue.numDefenders() ){
+                candidate.add(catalogue.getDefender(player));
+            }
+            else{
+                player = player - catalogue.numDefenders();
+            }
+            if(player < catalogue.numMidfielders()){
+                candidate.add(catalogue.getMidfielder(player));
+            }
+            else{
+                player = player - catalogue.numMidfielders();
+                candidate.add(catalogue.getStriker(player));
+            }
+        }
+        System.out.println("RETORNA ESTA LISTA " + candidate);
+        return candidate;
     }
 
 }
