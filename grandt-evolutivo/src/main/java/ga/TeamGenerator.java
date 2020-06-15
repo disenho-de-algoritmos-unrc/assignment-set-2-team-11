@@ -16,9 +16,19 @@ import org.jgap.impl.IntegerGene;
 
 public class TeamGenerator {
 
+   /**
+    * A catalogue of all the available players.
+    */
     PlayersCatalogue catalogue;
 
+   /**
+    * A description of how the team is composed.
+    */
     TeamConfiguration configuration = new TeamConfiguration();
+
+    int POPULATION_SIZE = 4000;
+
+    int GENERATIONS = 40;
 
     /**
      * Creates the team generator receiving as a parameter the catalogue of players.
@@ -33,11 +43,21 @@ public class TeamGenerator {
         }
     }
 
-
+   /**
+    * Class setter.
+    * @param newConfiguration The given configuration to be set.
+    */
     public void setTeamConfiguration(TeamConfiguration newConfiguration) {
         this.configuration = newConfiguration;
     }
 
+   /**
+    * Parses and converts a chromosome into a list of players (a team).
+    * @param c A given chromosome.
+    * @param config The given team configuration.
+    * @param catalogue The given players catalogue.
+    * @return A list of players given by the chromosome c.
+    */
     public static List<Player> chromosomeToTeam(IChromosome c, TeamConfiguration config, PlayersCatalogue catalogue) {
 
         Integer[] candidates = new Integer[config.getTeamSize()];
@@ -131,15 +151,15 @@ public class TeamGenerator {
 
         conf.setSampleChromosome(sampleChromosome);
 
-        conf.setPopulationSize(4000);
+        conf.setPopulationSize(POPULATION_SIZE);
 
-        int generations = 40;
+        int generations = GENERATIONS;
 
         Genotype population = Genotype.randomInitialGenotype(conf);
 
         IChromosome bestTeamSoFar = population.getFittestChromosome();
 
-        for (int i = 0; i < generations; i++) {
+        for (int i = 0; i < GENERATIONS; i++) {
             
             population.evolve();
 

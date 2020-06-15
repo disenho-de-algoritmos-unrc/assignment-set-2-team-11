@@ -15,10 +15,22 @@ import java.util.Arrays;
 
 public class GranDTFitnessFunction extends FitnessFunction {
 
+   /**
+    * A catalogue of all the available players.
+    */
     TeamConfiguration myTeam;
 
+   /**
+    * A description of how the team is composed.
+    */
    	PlayersCatalogue catalogue;
 
+
+   /**
+    * Class constructor.
+    * @param team A given team configuration
+    * @param catalogue A given players catalogue.
+    */
     public GranDTFitnessFunction(TeamConfiguration team, PlayersCatalogue catalogue) {
 
     	this.myTeam = team;
@@ -26,7 +38,11 @@ public class GranDTFitnessFunction extends FitnessFunction {
     	this.catalogue = catalogue;
     }
 
-
+   /**
+    * Determines the fitness for any given chromosome
+    * @param c A given chromosome
+    * @return A value expressing the fitness of the given chromosome.
+    */
     @Override
     protected double evaluate(IChromosome c) {
 
