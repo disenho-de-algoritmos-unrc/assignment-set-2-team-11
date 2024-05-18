@@ -23,77 +23,123 @@ sig Student extends Person  {}
 
 /* Every person is a student. */
 pred inv1 {
-	// TODO: Specify this property
+	 all x : Person | x in Student
 }
+
+run inv1
 
 /* There are no teachers. */
 pred inv2 {
-    // TODO: Specify this property	
+    all x : Person | x !in Teacher	
 }
+
+run inv2
+
 
 /* No person is both a student and a teacher. */
 pred inv3 {
-    // TODO: Specify this property
+    all x : Person | x in Student iff not x in Teacher
 }
+
+run inv3
 
 /* No person is neither a student nor a teacher. */
 pred inv4 {
-    // TODO: Specify this property	
+    all x : Person | x !in Student and x !in Teacher 	
 }
+
+run inv4
 
 /* There are some classes assigned to teachers. */
 pred inv5 {
-    // TODO: Specify this property	
+    some c : Class | some t : Teacher | c in t.Teaches
 }
+
+
+run inv5
 
 /* Every teacher has classes assigned. */
 pred inv6 {
-    // TODO: Specify this property	
+    all x : Teacher | x.Teaches != none	
 }
+
+assert assertInv6 {
+	all t : Teacher | inv6 implies some c : Class | c in t.Teaches
+}
+
+check assertInv6
+
+run inv6
 
 /* Every class has teachers assigned. */
 pred inv7 {
-    // TODO: Specify this property	
+    all x : Class | some y : Teacher | x in y.Teaches	
 }
+
+run inv7
 
 /* Teachers are assigned at most one class. */
 pred inv8 {
-    // TODO: Specify this property	
+    all x : Teacher | lone y : Class | y in x.Teaches	
 }
+
+run inv8
 
 /* No class has more than a teacher assigned. */
 pred inv9 {
-    // TODO: Specify this property	
+	lone x : Teacher | all y : Class | y in x.Teaches
 }
+
+run inv9
 
 /* For every class, every student has a group assigned. */
 pred inv10 {
-    // TODO: Specify this property	
+    all c : Class | all s : Student | one g : Group | (s -> g) in (c.Groups)
 }
+
+run inv10
 
 /* A class only has groups if it has a teacher assigned. */
 pred inv11 {
-    // TODO: Specify this property	
+    	all c : Class | some t : Teacher | c !in t.Teaches  implies
+	no g : Group | c.Groups & (Person -> g) != none -> none
 }
+
+run inv11
 
 /* Each teacher is responsible for some groups. */
 pred inv12 {
-    // TODO: Specify this property	
+    some c : Class | all t : Teacher | some g : Group | (t -> g) in c.Groups
 }
+
+run inv12
 
 /* Only teachers tutor, and only students are tutored. */
 pred inv13 {
-    // TODO: Specify this property	
+    all p, p' : Person | p in p'.Tutors implies p in Student and p' in Teacher
 }
+
+run inv13
 
 /* Every student in a class is at least tutored by all the teachers
  * assigned to that class. */
 pred inv14 {
-    // TODO: Specify this property	
+   all c : Class | all s : Student | all t : Teacher | 
+   ((s -> Group) & (c.Groups) != none -> none) and c in t.Teaches => s in t.Tutors
 }
+
+run inv14 
+
+assert inv14Check {
+	inv14 => no s : Student | some c : Class | some t : Teacher | some g : Group |
+	(s -> g) in c.Groups and c in t.Teaches and s !in t.Tutors
 }
+
+check inv14Check
 
 /* The tutoring chain of every person eventually reaches a Teacher. */
 pred inv15 {
-    // TODO: Specify this property	
+    all p : Person | some t : Teacher | (t -> p) in *(Tutors)	
 }
+
+run inv15

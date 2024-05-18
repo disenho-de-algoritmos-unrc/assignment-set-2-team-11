@@ -28,14 +28,22 @@ public class TeamGeneratorTest {
         int maxIterations = 30;
         int iteration = 1;
         while (iteration <= maxIterations && !validTeamObtained) {
-            List<Player> result = generator.generateTeam();
             
+            List<Player> result = generator.generateTeam(); 
+
             if (configuration.isValidTeam(result)) {
                 validTeamObtained = true;
+                int value = 0;
                 // in case you want to see the team... uncomment the following
                 // for (Player player: result) {
+
                 //    System.out.println(player.getName() + " " + player.getPosition());
-                // }
+
+               //     value += player.getScore();
+
+               //  }
+
+               //  System.out.println(value);
             }
             
             iteration++;

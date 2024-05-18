@@ -19,5 +19,4 @@ public interface GameEngine {
      * @return the computed next state.
      */
     public LaskerMorrisGameState computeMove(LaskerMorrisGameState state);
-
 }

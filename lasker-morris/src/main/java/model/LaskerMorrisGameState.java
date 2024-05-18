@@ -1,5 +1,9 @@
 package model;
 
+import java.lang.Math;
+import java.util.List;
+import java.util.Arrays;
+
 /**
  * Represents a board state of the Lasker Morris Game.
  * Contains most of the functionality of the game, including
@@ -42,6 +46,9 @@ public class LaskerMorrisGameState {
      * have to be put in the board
      */
     private int remainingBlackStones = LaskerMorrisBoard.MAXSTONES;
+
+    
+    private boolean closedMill = false;
 
     /**
      * Represents the state of the board. Each position of the array 
@@ -101,6 +108,7 @@ public class LaskerMorrisGameState {
 
         return newState;
     }
+
 
     /**
      * Sets a stone in the specified position, according to the player's turn.
@@ -236,6 +244,14 @@ public class LaskerMorrisGameState {
         this.whitePlays = whitesTurn;		
     }
 
+
+   /**
+    * True iff a mill was formed in the current game state.
+    */
+    public void setClosedMill(boolean closeMill){
+        this.closedMill = closeMill;
+    }
+
     /**
      * Checks whether given position belongs to a mill.
      * @param position is the position to query.
@@ -314,12 +330,365 @@ public class LaskerMorrisGameState {
 
     /**
      * Computes estimated value for current state.
+     * Idea taken from the following paper: http://www.dasconference.ro/papers/2008/B7.pdf
      * @return an estimated value of the current state.
      */
     public int estimatedValue() {
-        //TODO Implement this method
+        
+        boolean phase2 = (this.whitePlays && this.numberOfWhiteStonesOnBoard() == 3 && this.remainingWhiteStones == 0) || (!this.whitePlays && this.numberOfBlackStonesOnBoard() == 3 && this.remainingBlackStones == 0);
+
+        if(!phase2) {
+
+            if(!whitePlays) {
+
+                return (16 * this.closedMills()) + (37 * this.numberOfMills()) + (5 * this.blockedAdversaryStones()) + (10 * this.numberOfStones()) + (10 * this.twoStonesConfiguration()) + (7 * this.threeStonesConfiguration()) + (8 * this.doubleMills()) + (1086 * this.winningConfiguration()); 
+            }
+
+            else {
+
+                return (-16 * this.closedMills()) - (37 * this.numberOfMills()) - (5 * this.blockedAdversaryStones()) - (10 * this.numberOfStones()) - (10 * this.twoStonesConfiguration()) - (7 * this.threeStonesConfiguration()) - (8 * this.doubleMills()) - (1086 * this.winningConfiguration()); 
+            }
+        }
+
+        else {
+
+            if(!whitePlays) {
+
+                return (16 * this.closedMills()) + (10 * this.twoStonesConfiguration()) + (1 * this.threeStonesConfiguration()) + (1190 * this.winningConfiguration());
+            }
+
+            else {
+
+                 return (- 16 * this.closedMills()) - (10 * this.twoStonesConfiguration()) - (1 * this.threeStonesConfiguration()) - (1190 * this.winningConfiguration()); 
+            }
+        }
+
+    }
+
+   /**
+    * Computes the difference between the number of mills for a given game state.
+    * @return the difference between the number of mills for a given game state.
+    */
+    public int numberOfMills () {
+
+        LaskerMorrisGameState clone = this.clone();
+
+        int whiteMills = 0;
+
+        int blackMills = 0;
+
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS ; i ++) {
+
+            if( clone.board[i]  == WHITE && clone.isInMill(i)  ) {
+
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+
+                for (int j = 0; j < mills.size() ; j++) {
+
+                    Integer[] mill = mills.get(j);
+
+                    if (clone.board[mill[0]] == WHITE && clone.board[mill[1]] == WHITE  && clone.board[mill[2]] == WHITE ) {
+
+                        whiteMills++;
+                    }
+                }
+
+                clone.removeStone(i);
+            }
+            else if (clone.board[i]  == BLACK && clone.isInMill(i)) {
+
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+
+                for (int j = 0; j < mills.size() ; j++) {
+
+                    Integer[] mill = mills.get(j);
+
+                    if (clone.board[mill[0]] == BLACK && clone.board[mill[1]] == BLACK  && clone.board[mill[2]] == BLACK ) {
+
+                        blackMills++;
+                    }
+                }
+
+                clone.removeStone(i);;
+            }
+        }
+
+        return !this.whitePlays? whiteMills-blackMills : blackMills-whiteMills;
+    }
+
+   /**
+    * Determines if a mill has been formed in the current game state.
+    * @return 1 if a mill has been closed in the current game state or zero otherwhise.
+    */
+
+    public int closedMills() {
+
+        return this.closedMill? 1 : 0;
+    }
+
+   /**
+    * Computes the difference between the current state's number of blocked stones and the adversary's.
+    * @return the difference between the current state's number of blocked stones and the adversary's.
+    */
+    public int blockedAdversaryStones() {
+
+        int blockedWhiteStones = 0;
+
+        int blockedBlackStones = 0;
+
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS ; i++ ) {
+
+            if (this.board[i] == WHITE && this.getNumberOfFreeAdjacent(i) == 0 ) {
+
+                blockedWhiteStones++;
+            }
+
+            else if(this.board[i] == BLACK && this.getNumberOfFreeAdjacent(i) == 0) {
+
+                blockedBlackStones++;
+            }
+        }
+
+        return !this.whitePlays? blockedBlackStones - blockedWhiteStones : blockedWhiteStones - blockedBlackStones;
+
+    }
+
+   /**
+    * Computes the difference between the current state's number of stones and the adversary's.
+    * @return the difference between the current state's number of stones and the adversary's.
+    */
+    public int numberOfStones() {
+
+        if (!this.whitePlays) {
+
+            return this.numberOfWhiteStonesOnBoard() - this.numberOfBlackStonesOnBoard();
+        }
+
+        else {
+
+            return this.numberOfBlackStonesOnBoard() - this.numberOfWhiteStonesOnBoard();
+        }
+        
+    }
+
+   /**
+    * Computes the difference between the current state's number of two-stone configurations and the adversary's.
+    * NOTE: A two stone configuration is two aligned stones (both either white or black) with an empty third position available to form a mill.   
+    * @return the difference between the current state's number of two-stone configurations and the adversary's.
+    */
+    public int twoStonesConfiguration() {
+
+        LaskerMorrisGameState clone = this.clone();
+
+        LaskerMorrisGameState blackClone = this.clone();
+
+        int whiteTwoStones = 0;
+
+        int blackTwoStones = 0;
+
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS; i++) {
+
+            if( clone.board[i]  == WHITE && !clone.isInMill(i)) {
+
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+
+                for (int j = 0; j < mills.size() ; j++) {
+
+                    Integer[] mill = mills.get(j);
+
+                    if ((clone.board[mill[0]] == WHITE && clone.board[mill[1]] == WHITE  && clone.board[mill[2]] == EMPTY) ||
+                        (clone.board[mill[0]] == WHITE && clone.board[mill[1]] == EMPTY  && clone.board[mill[2]] == WHITE) ||
+                        (clone.board[mill[0]] == EMPTY && clone.board[mill[1]] == WHITE  && clone.board[mill[2]] == WHITE)) {
+
+                        whiteTwoStones++;
+
+                        clone.removeStone(i);
+                    }
+                }
+            }
+
+            else if (blackClone.board[i]  == BLACK && !blackClone.isInMill(i)) {
+
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+
+                for (int j = 0; j < mills.size() ; j++) {
+
+                    Integer[] mill = mills.get(j);
+
+                    if ((blackClone.board[mill[0]] == EMPTY && blackClone.board[mill[1]] == BLACK  && blackClone.board[mill[2]] == BLACK) ||
+                        (blackClone.board[mill[0]] == BLACK && blackClone.board[mill[1]] == EMPTY  && blackClone.board[mill[2]] == BLACK) ||
+                        (blackClone.board[mill[0]] == BLACK && blackClone.board[mill[1]] == BLACK  && blackClone.board[mill[2]] == EMPTY)) {
+
+                        blackTwoStones++;
+
+                        blackClone.removeStone(i);;
+                    }
+                }
+            }
+        }
+
+        return !this.whitePlays? whiteTwoStones - blackTwoStones : blackTwoStones - whiteTwoStones;
+    }
+
+   /**
+    * Computes the difference between the current state's number of three-stone configurations and the adversary's.
+    * NOTE: A three stone configuration is two two-stone configurations joint  together  by a stone present in both two-stone configurations.
+    * @return the difference between the current state's number of three-stone configurations and the adversary's.
+    */
+    public int threeStonesConfiguration() {
+
+        LaskerMorrisGameState clone = this.clone();
+
+        int whiteTwoStones = 0;
+
+        int blackTwoStones = 0;
+
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS; i++) {
+
+            if( clone.board[i]  == WHITE && !clone.isInMill(i)) {
+
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+
+                int twoStones = 0;
+
+                for (int j = 0; j < mills.size() ; j++) {
+
+                    Integer[] mill = mills.get(j);
+
+                    if ((clone.board[mill[0]] == WHITE && clone.board[mill[1]] == WHITE  && clone.board[mill[2]] == EMPTY) ||
+                        (clone.board[mill[0]] == WHITE && clone.board[mill[1]] == EMPTY  && clone.board[mill[2]] == WHITE) ||
+                        (clone.board[mill[0]] == EMPTY && clone.board[mill[1]] == WHITE  && clone.board[mill[2]] == WHITE)) {
+
+                        twoStones = twoStones + 1 ;
+                    }
+
+                    if (twoStones == 2) {
+
+                        whiteTwoStones++;
+                    }
+                }
+            }
+
+            else if (clone.board[i]  == BLACK && !clone.isInMill(i)) {
+
+                int amount = 0;
+
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+
+                for (int j = 0; j < mills.size() ; j++) {
+
+                    Integer[] mill = mills.get(j);
+
+                    if ((clone.board[mill[0]] == BLACK && clone.board[mill[1]] == BLACK  && clone.board[mill[2]] == EMPTY) ||
+                        (clone.board[mill[0]] == BLACK && clone.board[mill[1]] == EMPTY  && clone.board[mill[2]] == BLACK) ||
+                        (clone.board[mill[0]] == EMPTY && clone.board[mill[1]] == BLACK  && clone.board[mill[2]] == BLACK)) {
+
+                        amount++;
+                    }
+                }
+
+                if (amount == 2) {
+
+                    blackTwoStones++;    
+                }
+            }
+        }
+
+        return !this.whitePlays? whiteTwoStones - blackTwoStones : blackTwoStones - whiteTwoStones;
+    }
+
+   /**
+    * Computes the difference between the current state's number of double mills and the adversary's
+    * NOTE: A double mill is two mills joint together by a stone present in both mills.
+    * @return the difference between the current state's number of double mills and the adversary's.
+    */
+    public int doubleMills() {
+
+        LaskerMorrisGameState clone = this.clone();
+
+        int whiteMills = 0;
+
+        int blackMills = 0;
+
+        for (int i = 0; i < LaskerMorrisBoard.POSITIONS; i++) {
+
+            if(clone.board[i]  == WHITE && clone.isInMill(i)) {
+
+                int amount = 0;
+
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+
+                for (int j = 0; j < mills.size() ; j++) {
+
+                    Integer[] mill = mills.get(j);
+
+                    if (clone.board[mill[0]] == WHITE && clone.board[mill[1]] == WHITE  && clone.board[mill[2]] == WHITE) {
+
+                        amount++;
+                    }
+                }
+
+                if (amount == 2) {
+
+                    whiteMills++;
+                }
+            }
+
+            else if (clone.board[i]  == BLACK && clone.isInMill(i)) {
+
+                int amount = 0;
+
+                List<Integer[]> mills = LaskerMorrisBoard.getInstance().getMills(i);
+
+                for (int j = 0; j < mills.size() ; j++) {
+
+                    Integer[] mill = mills.get(j);
+
+                    if (clone.board[mill[0]] == BLACK && clone.board[mill[1]] == BLACK  && clone.board[mill[2]] == BLACK) {
+
+                        amount++;
+                    }
+                }
+
+                if (amount == 2) {
+
+                    blackMills++;
+                }
+            }
+        }
+
+        return this.whitePlays? whiteMills-blackMills : blackMills-whiteMills;
+    }
+
+   /**
+    * Determines if the current game state guarantees a win.
+    * @return 0 if it doesn't guarantee a win, 1 or -1 if it guarantees a win for either the white or black stones.
+    */
+    public int winningConfiguration() {
+
+        if (this.whiteWins() && !this.whitePlays) {
+
+            return 1;
+        }
+
+        else if (!this.whitePlays && this.blackWins()) {
+
+            return -1;
+        }
+
+        else if (this.whitePlays && this.blackWins()) {
+
+            return 1;
+        }
+
+        else if(this.whitePlays && this.whiteWins()) {
+
+            return -1;
+        }
+
         return 0;
     }
+
 
     /**
      * Computes number of free positions adjacent to white positions.
@@ -447,5 +816,4 @@ public class LaskerMorrisGameState {
         }
         return numAdjacencies;
     }
-
 }

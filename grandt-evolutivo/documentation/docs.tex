@@ -1,0 +1,1077 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage{color}
+\usepackage{ifthen}
+\usepackage{makeidx}
+\usepackage{ifpdf}
+\usepackage[headings]{fullpage}
+\usepackage{listings}
+\lstset{language=Java,breaklines=true}
+\ifpdf \usepackage[pdftex, pdfpagemode={UseOutlines},bookmarks,colorlinks,linkcolor={blue},plainpages=false,pdfpagelabels,citecolor={red},breaklinks=true]{hyperref}
+  \usepackage[pdftex]{graphicx}
+  \pdfcompresslevel=9
+  \DeclareGraphicsRule{*}{mps}{*}{}
+\else
+  \usepackage[dvips]{graphicx}
+\fi
+
+\newcommand{\entityintro}[3]{%
+  \hbox to \hsize{%
+    \vbox{%
+      \hbox to .2in{}%
+    }%
+    {\bf  #1}%
+    \dotfill\pageref{#2}%
+  }
+  \makebox[\hsize]{%
+    \parbox{.4in}{}%
+    \parbox[l]{5in}{%
+      \vspace{1mm}%
+      #3%
+      \vspace{1mm}%
+    }%
+  }%
+}
+\newcommand{\refdefined}[1]{
+\expandafter\ifx\csname r@#1\endcsname\relax
+\relax\else
+{$($in \ref{#1}, page \pageref{#1}$)$}\fi}
+\date{\today}
+\chardef\textbackslash=`\\
+\makeindex
+\begin{document}
+\sloppy
+\addtocontents{toc}{\protect\markboth{Contents}{Contents}}
+\tableofcontents
+\chapter{Package ga}{
+\label{ga}\hskip -.05in
+\hbox to \hsize{\textit{ Package Contents\hfil Page}}
+\vskip .13in
+\hbox{{\bf  Classes}}
+\entityintro{GranDTFitnessFunction}{ga.GranDTFitnessFunction}{}
+\entityintro{TeamGenerator}{ga.TeamGenerator}{}
+\vskip .1in
+\vskip .1in
+\section{\label{ga.GranDTFitnessFunction}\index{GranDTFitnessFunction}Class GranDTFitnessFunction}{
+\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class GranDTFitnessFunction
+ extends FitnessFunction\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf GranDTFitnessFunction(TeamConfiguration, PlayersCatalogue)} Class constructor.\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf evaluate(IChromosome)} Determines the fitness for any given chromosome\\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{GranDTFitnessFunction(TeamConfiguration, PlayersCatalogue)}
+{\bf  GranDTFitnessFunction}\\
+\begin{lstlisting}[frame=none]
+public GranDTFitnessFunction(model.TeamConfiguration team,model.PlayersCatalogue catalogue)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Class constructor.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{team} -- A given team configuration}
+   \item{
+\texttt{catalogue} -- A given players catalogue.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{evaluate(IChromosome)}
+{\bf  evaluate}\\
+\begin{lstlisting}[frame=none]
+protected double evaluate(IChromosome c)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Determines the fitness for any given chromosome
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{c} -- A given chromosome}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+A value expressing the fitness of the given chromosome. 
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{ga.TeamGenerator}\index{TeamGenerator}Class TeamGenerator}{
+\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class TeamGenerator
+ extends java.lang.Object\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf TeamGenerator(Path)} Creates the team generator receiving as a parameter the catalogue of players.\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf chromosomeToTeam(IChromosome, TeamConfiguration, PlayersCatalogue)} Parses and converts a chromosome into a list of players (a team).\\
+{\bf generateTeam()} Generates a near-optimal team using a genetic algorithm.\\
+{\bf setTeamConfiguration(TeamConfiguration)} Class setter.\\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{TeamGenerator(Path)}
+{\bf  TeamGenerator}\\
+\begin{lstlisting}[frame=none]
+public TeamGenerator(java.nio.file.Path resourceDirectory)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates the team generator receiving as a parameter the catalogue of players. The catalogue of players comes in an excel sheet.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{resourceDirectory} -- is the name of the excel file containing the players' catalogue.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{chromosomeToTeam(IChromosome, TeamConfiguration, PlayersCatalogue)}
+{\bf  chromosomeToTeam}\\
+\begin{lstlisting}[frame=none]
+public static java.util.List chromosomeToTeam(IChromosome c,model.TeamConfiguration config,model.PlayersCatalogue catalogue)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Parses and converts a chromosome into a list of players (a team).
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{c} -- A given chromosome.}
+   \item{
+\texttt{config} -- The given team configuration.}
+   \item{
+\texttt{catalogue} -- The given players catalogue.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+A list of players given by the chromosome c. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{generateTeam()}
+{\bf  generateTeam}\\
+\begin{lstlisting}[frame=none]
+public java.util.List generateTeam() throws InvalidConfigurationException\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Generates a near-optimal team using a genetic algorithm.
+}
+\item{{\bf  Returns} -- 
+the generated team, as a list of players 
+}%end item
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{InvalidConfigurationException} -- when called on an invalid configuration (JGAP).}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setTeamConfiguration(TeamConfiguration)}
+{\bf  setTeamConfiguration}\\
+\begin{lstlisting}[frame=none]
+public void setTeamConfiguration(model.TeamConfiguration newConfiguration)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Class setter.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{newConfiguration} -- The given configuration to be set.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+}
+\chapter{Package model}{
+\label{model}\hskip -.05in
+\hbox to \hsize{\textit{ Package Contents\hfil Page}}
+\vskip .13in
+\hbox{{\bf  Classes}}
+\entityintro{Player}{model.Player}{Captures the information of a player.}
+\entityintro{PlayersCatalogue}{model.PlayersCatalogue}{Catalogue of players.}
+\entityintro{Position}{model.Position}{Captures the positions of a player.}
+\entityintro{TeamConfiguration}{model.TeamConfiguration}{Captures a team configuration, including the budget, team size and formation.}
+\vskip .1in
+\vskip .1in
+\section{\label{model.Player}\index{Player}Class Player}{
+\vskip .1in 
+Captures the information of a player.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class Player
+ extends java.lang.Object\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf Player(Row)} \\
+{\bf Player(String, String, Position, double, double)} Default constructor for Player class.\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf getClub()} \\
+{\bf getName()} \\
+{\bf getPosition()} \\
+{\bf getScore()} \\
+{\bf getValue()} \\
+{\bf setClub(String)} \\
+{\bf setName(String)} \\
+{\bf setPosition(Position)} \\
+{\bf setScore(int)} \\
+{\bf setValue(int)} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{Player(Row)}
+{\bf  Player}\\
+\begin{lstlisting}[frame=none]
+public Player(Row row)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{Player(String, String, Position, double, double)}
+{\bf  Player}\\
+\begin{lstlisting}[frame=none]
+public Player(java.lang.String name,java.lang.String club,Position position,double value,double score)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Default constructor for Player class.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{name} -- is the name of the player.}
+   \item{
+\texttt{club} -- is the club of the player.}
+   \item{
+\texttt{position} -- is the position of the player.}
+   \item{
+\texttt{value} -- is the value of the player.}
+   \item{
+\texttt{score} -- is the estimated score of the player.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{getClub()}
+{\bf  getClub}\\
+\begin{lstlisting}[frame=none]
+public java.lang.String getClub()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the club 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getName()}
+{\bf  getName}\\
+\begin{lstlisting}[frame=none]
+public java.lang.String getName()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the name 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getPosition()}
+{\bf  getPosition}\\
+\begin{lstlisting}[frame=none]
+public Position getPosition()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the position 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getScore()}
+{\bf  getScore}\\
+\begin{lstlisting}[frame=none]
+public double getScore()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the score 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getValue()}
+{\bf  getValue}\\
+\begin{lstlisting}[frame=none]
+public double getValue()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the value 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setClub(String)}
+{\bf  setClub}\\
+\begin{lstlisting}[frame=none]
+public void setClub(java.lang.String club)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{club} -- the club to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setName(String)}
+{\bf  setName}\\
+\begin{lstlisting}[frame=none]
+public void setName(java.lang.String name)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{name} -- the name to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setPosition(Position)}
+{\bf  setPosition}\\
+\begin{lstlisting}[frame=none]
+public void setPosition(Position position)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{position} -- the position to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setScore(int)}
+{\bf  setScore}\\
+\begin{lstlisting}[frame=none]
+public void setScore(int score)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{score} -- the score to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setValue(int)}
+{\bf  setValue}\\
+\begin{lstlisting}[frame=none]
+public void setValue(int value)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{value} -- the value to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{model.PlayersCatalogue}\index{PlayersCatalogue}Class PlayersCatalogue}{
+\vskip .1in 
+Catalogue of players.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class PlayersCatalogue
+ extends java.lang.Object\end{lstlisting}
+\subsection{Field summary}{
+\begin{verse}
+{\bf defenders} \\
+{\bf goalkeepers} \\
+{\bf midfielders} \\
+{\bf strikers} \\
+\end{verse}
+}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf PlayersCatalogue(Path)} Creates a catalogue from an excel file.\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf getDefender(int)} Returns the ith defender in the catalogue\\
+{\bf getGoalkeeper(int)} Returns the ith goalkeeper in the catalogue\\
+{\bf getMidfielder(int)} Returns the ith midfielder in the catalogue\\
+{\bf getStriker(int)} Returns the ith striker in the catalogue\\
+{\bf numDefenders()} Returns the number of defenders in the catalogue\\
+{\bf numGoalkeepers()} Returns the number of goalkeepers in the catalogue\\
+{\bf numMidfielders()} Returns the number of midfielders in the catalogue\\
+{\bf numStrikers()} Returns the number of strikers in the catalogue\\
+\end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{goalkeepers}
+\label{model.PlayersCatalogue.goalkeepers}\texttt{public java.util.List\ {\bf  goalkeepers}}
+}
+\item{
+\index{defenders}
+\label{model.PlayersCatalogue.defenders}\texttt{public java.util.List\ {\bf  defenders}}
+}
+\item{
+\index{midfielders}
+\label{model.PlayersCatalogue.midfielders}\texttt{public java.util.List\ {\bf  midfielders}}
+}
+\item{
+\index{strikers}
+\label{model.PlayersCatalogue.strikers}\texttt{public java.util.List\ {\bf  strikers}}
+}
+\end{itemize}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{PlayersCatalogue(Path)}
+{\bf  PlayersCatalogue}\\
+\begin{lstlisting}[frame=none]
+public PlayersCatalogue(java.nio.file.Path resourceDirectory) throws java.io.IOException\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates a catalogue from an excel file.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{resourceDirectory} -- is the file name of the excel file containing the catalogue.}
+  \end{itemize}
+}%end item
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.io.IOException} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{getDefender(int)}
+{\bf  getDefender}\\
+\begin{lstlisting}[frame=none]
+public Player getDefender(int i)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the ith defender in the catalogue
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{i} -- is the index of the defender}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the ith defender. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getGoalkeeper(int)}
+{\bf  getGoalkeeper}\\
+\begin{lstlisting}[frame=none]
+public Player getGoalkeeper(int i)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the ith goalkeeper in the catalogue
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{i} -- is the index of the goalkeeper}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the ith goalkeeper. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getMidfielder(int)}
+{\bf  getMidfielder}\\
+\begin{lstlisting}[frame=none]
+public Player getMidfielder(int i)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the ith midfielder in the catalogue
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{i} -- is the index of the midfielder}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the ith midfielder. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getStriker(int)}
+{\bf  getStriker}\\
+\begin{lstlisting}[frame=none]
+public Player getStriker(int i)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the ith striker in the catalogue
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{i} -- is the index of the striker}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the ith striker. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{numDefenders()}
+{\bf  numDefenders}\\
+\begin{lstlisting}[frame=none]
+public int numDefenders()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the number of defenders in the catalogue
+}
+\item{{\bf  Returns} -- 
+the number of defenders in the catalogue 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{numGoalkeepers()}
+{\bf  numGoalkeepers}\\
+\begin{lstlisting}[frame=none]
+public int numGoalkeepers()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the number of goalkeepers in the catalogue
+}
+\item{{\bf  Returns} -- 
+the number of goalkeepers in the catalogue 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{numMidfielders()}
+{\bf  numMidfielders}\\
+\begin{lstlisting}[frame=none]
+public int numMidfielders()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the number of midfielders in the catalogue
+}
+\item{{\bf  Returns} -- 
+the number of midfielders in the catalogue 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{numStrikers()}
+{\bf  numStrikers}\\
+\begin{lstlisting}[frame=none]
+public int numStrikers()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the number of strikers in the catalogue
+}
+\item{{\bf  Returns} -- 
+the number of strikers in the catalogue 
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{model.Position}\index{Position}Class Position}{
+\vskip .1in 
+Captures the positions of a player. Positions correspond to those used in GRAN DT list of player. These are: ARQ: goalkeeper DEF: defender VOL: midfielder DEL: striker.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public final class Position
+ extends java.lang.Enum\end{lstlisting}
+\subsection{Field summary}{
+\begin{verse}
+{\bf ARQ} \\
+{\bf DEF} \\
+{\bf DEL} \\
+{\bf VOL} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf valueOf(String)} \\
+{\bf values()} \\
+\end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{ARQ}
+\label{model.Position.ARQ}\texttt{public static final Position\ {\bf  ARQ}}
+}
+\item{
+\index{DEF}
+\label{model.Position.DEF}\texttt{public static final Position\ {\bf  DEF}}
+}
+\item{
+\index{VOL}
+\label{model.Position.VOL}\texttt{public static final Position\ {\bf  VOL}}
+}
+\item{
+\index{DEL}
+\label{model.Position.DEL}\texttt{public static final Position\ {\bf  DEL}}
+}
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{valueOf(String)}
+{\bf  valueOf}\\
+\begin{lstlisting}[frame=none]
+public static Position valueOf(java.lang.String name)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{values()}
+{\bf  values}\\
+\begin{lstlisting}[frame=none]
+public static Position[] values()\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Members inherited from class Enum }{
+\texttt{java.lang.Enum} {\small 
+\refdefined{java.lang.Enum}}
+{\small 
+
+\vskip -2em
+\begin{itemize}
+\item{\vskip -1.5ex 
+\texttt{protected final Object {\bf  clone}() throws CloneNotSupportedException
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{public final int {\bf  compareTo}(\texttt{Enum} {\bf  arg0})
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{public final Optional {\bf  describeConstable}()
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{public final boolean {\bf  equals}(\texttt{Object} {\bf  arg0})
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{protected final void {\bf  finalize}()
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{public final Class {\bf  getDeclaringClass}()
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{public final int {\bf  hashCode}()
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{public final String {\bf  name}()
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{public final int {\bf  ordinal}()
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{public String {\bf  toString}()
+}%end signature
+}%end item
+\item{\vskip -1.5ex 
+\texttt{public static Enum {\bf  valueOf}(\texttt{Class} {\bf  arg0},
+\texttt{String} {\bf  arg1})
+}%end signature
+}%end item
+\end{itemize}
+}
+}
+\section{\label{model.TeamConfiguration}\index{TeamConfiguration}Class TeamConfiguration}{
+\vskip .1in 
+Captures a team configuration, including the budget, team size and formation.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class TeamConfiguration
+ extends java.lang.Object\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf TeamConfiguration()} Default team configuration constructor.\\
+{\bf TeamConfiguration(int, int, int, int, int)} Constructor that receives budget, team size and number of players.\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf getBudget()} \\
+{\bf getDefenders()} \\
+{\bf getGoalkeepers()} \\
+{\bf getMidfielders()} \\
+{\bf getStrikers()} \\
+{\bf getTeamSize()} \\
+{\bf isValidTeam(List)} Checks whether a list of players is a valid team.\\
+{\bf setBudget(int)} \\
+{\bf setDefenders(int)} \\
+{\bf setGoalkeepers(int)} \\
+{\bf setMidfielders(int)} \\
+{\bf setStrikers(int)} \\
+{\bf setTeamSize(int)} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{TeamConfiguration()}
+{\bf  TeamConfiguration}\\
+\begin{lstlisting}[frame=none]
+public TeamConfiguration()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Default team configuration constructor. It sets budget to 65000000, team size to 15, and formation to 1-4-3-3 with one substitution per position.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{TeamConfiguration(int, int, int, int, int)}
+{\bf  TeamConfiguration}\\
+\begin{lstlisting}[frame=none]
+public TeamConfiguration(int budget,int goalkeepers,int defenders,int midfielders,int strikers)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Constructor that receives budget, team size and number of players.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{budget} -- }
+   \item{
+\texttt{goalkeepers} -- }
+   \item{
+\texttt{defenders} -- }
+   \item{
+\texttt{midfielders} -- }
+   \item{
+\texttt{strikers} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{getBudget()}
+{\bf  getBudget}\\
+\begin{lstlisting}[frame=none]
+public int getBudget()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the budget 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getDefenders()}
+{\bf  getDefenders}\\
+\begin{lstlisting}[frame=none]
+public int getDefenders()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the defenders 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getGoalkeepers()}
+{\bf  getGoalkeepers}\\
+\begin{lstlisting}[frame=none]
+public int getGoalkeepers()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the goalkeepers 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getMidfielders()}
+{\bf  getMidfielders}\\
+\begin{lstlisting}[frame=none]
+public int getMidfielders()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the midfielders 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getStrikers()}
+{\bf  getStrikers}\\
+\begin{lstlisting}[frame=none]
+public int getStrikers()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the strikers 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getTeamSize()}
+{\bf  getTeamSize}\\
+\begin{lstlisting}[frame=none]
+public int getTeamSize()\end{lstlisting} %end signature
+\begin{itemize}
+\item{{\bf  Returns} -- 
+the teamSize 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isValidTeam(List)}
+{\bf  isValidTeam}\\
+\begin{lstlisting}[frame=none]
+public boolean isValidTeam(java.util.List team)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks whether a list of players is a valid team.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{team} -- is the list of players to be checked.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+true iff the team is valid, i.e., satisfies formation and is within budget. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setBudget(int)}
+{\bf  setBudget}\\
+\begin{lstlisting}[frame=none]
+public void setBudget(int budget)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{budget} -- the budget to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setDefenders(int)}
+{\bf  setDefenders}\\
+\begin{lstlisting}[frame=none]
+public void setDefenders(int defenders)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{defenders} -- the defenders to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setGoalkeepers(int)}
+{\bf  setGoalkeepers}\\
+\begin{lstlisting}[frame=none]
+public void setGoalkeepers(int goalkeepers)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{goalkeepers} -- the goalkeepers to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setMidfielders(int)}
+{\bf  setMidfielders}\\
+\begin{lstlisting}[frame=none]
+public void setMidfielders(int midfielders)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{midfielders} -- the midfielders to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setStrikers(int)}
+{\bf  setStrikers}\\
+\begin{lstlisting}[frame=none]
+public void setStrikers(int strikers)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{strikers} -- the strikers to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setTeamSize(int)}
+{\bf  setTeamSize}\\
+\begin{lstlisting}[frame=none]
+public void setTeamSize(int teamSize)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{teamSize} -- the teamSize to set}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+}
+\printindex
+\end{document}

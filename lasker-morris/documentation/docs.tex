@@ -1,0 +1,1547 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage{color}
+\usepackage{ifthen}
+\usepackage{makeidx}
+\usepackage{ifpdf}
+\usepackage[headings]{fullpage}
+\usepackage{listings}
+\lstset{language=Java,breaklines=true}
+\ifpdf \usepackage[pdftex, pdfpagemode={UseOutlines},bookmarks,colorlinks,linkcolor={blue},plainpages=false,pdfpagelabels,citecolor={red},breaklinks=true]{hyperref}
+  \usepackage[pdftex]{graphicx}
+  \pdfcompresslevel=9
+  \DeclareGraphicsRule{*}{mps}{*}{}
+\else
+  \usepackage[dvips]{graphicx}
+\fi
+
+\newcommand{\entityintro}[3]{%
+  \hbox to \hsize{%
+    \vbox{%
+      \hbox to .2in{}%
+    }%
+    {\bf  #1}%
+    \dotfill\pageref{#2}%
+  }
+  \makebox[\hsize]{%
+    \parbox{.4in}{}%
+    \parbox[l]{5in}{%
+      \vspace{1mm}%
+      #3%
+      \vspace{1mm}%
+    }%
+  }%
+}
+\newcommand{\refdefined}[1]{
+\expandafter\ifx\csname r@#1\endcsname\relax
+\relax\else
+{$($in \ref{#1}, page \pageref{#1}$)$}\fi}
+\date{\today}
+\chardef\textbackslash=`\\
+\makeindex
+\begin{document}
+\sloppy
+\addtocontents{toc}{\protect\markboth{Contents}{Contents}}
+\tableofcontents
+\chapter{Package ThreadingUtils}{
+\label{ThreadingUtils}\hskip -.05in
+\hbox to \hsize{\textit{ Package Contents\hfil Page}}
+\vskip .13in
+\hbox{{\bf  Classes}}
+\entityintro{TimeLimitedCodeBlock}{ThreadingUtils.TimeLimitedCodeBlock}{Allows one to call a thread with a given timeout.}
+\vskip .1in
+\vskip .1in
+\section{\label{ThreadingUtils.TimeLimitedCodeBlock}\index{TimeLimitedCodeBlock}Class TimeLimitedCodeBlock}{
+\vskip .1in 
+Allows one to call a thread with a given timeout. Implementation taken from: https://stackoverflow.com/questions/5715235/java-set-timeout-on-a-certain-block-of-code\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class TimeLimitedCodeBlock
+ extends java.lang.Object\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf TimeLimitedCodeBlock()} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf runWithTimeout(Callable, long, TimeUnit)} Implements the actual runnable code block with timeout.\\
+{\bf runWithTimeout(Runnable, long, TimeUnit)} Calls a runnable object, with a given timeout.\\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{TimeLimitedCodeBlock()}
+{\bf  TimeLimitedCodeBlock}\\
+\begin{lstlisting}[frame=none]
+public TimeLimitedCodeBlock()\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{runWithTimeout(Callable, long, TimeUnit)}
+{\bf  runWithTimeout}\\
+\begin{lstlisting}[frame=none]
+public static java.lang.Object runWithTimeout(java.util.concurrent.Callable callable,long timeout,java.util.concurrent.TimeUnit timeUnit) throws java.lang.Exception\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Implements the actual runnable code block with timeout.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{runWithTimeout(Runnable, long, TimeUnit)}
+{\bf  runWithTimeout}\\
+\begin{lstlisting}[frame=none]
+public static void runWithTimeout(java.lang.Runnable runnable,long timeout,java.util.concurrent.TimeUnit timeUnit) throws java.lang.Exception\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Calls a runnable object, with a given timeout.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{runnable} -- is the runnable object to run.}
+   \item{
+\texttt{timeout} -- is the timeout.}
+   \item{
+\texttt{timeUnit} -- is the unit of the timeout.}
+  \end{itemize}
+}%end item
+\item{{\bf  Throws}
+  \begin{itemize}
+   \item{\vskip -.6ex \texttt{java.lang.Exception} -- }
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+}
+\chapter{Package engines}{
+\label{engines}\hskip -.05in
+\hbox to \hsize{\textit{ Package Contents\hfil Page}}
+\vskip .13in
+\hbox{{\bf  Interfaces}}
+\entityintro{GameEngine}{engines.GameEngine}{Interface to register requirements for game engines.}
+\vskip .13in
+\hbox{{\bf  Classes}}
+\entityintro{RandomEngine}{engines.RandomEngine}{Engine implementing random moves.}
+\entityintro{Team11Engine}{engines.Team11Engine}{Engine implementing random moves.}
+\entityintro{ThreadedRandomEngine}{engines.ThreadedRandomEngine}{Class that runs a thread with a random engine.}
+\entityintro{ThreadedTeam11Engine}{engines.ThreadedTeam11Engine}{Class that runs a thread with a random engine.}
+\vskip .1in
+\vskip .1in
+\section{\label{engines.GameEngine}\index{GameEngine@\textit{ GameEngine}}Interface GameEngine}{
+\vskip .1in 
+Interface to register requirements for game engines.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public interface GameEngine
+\end{lstlisting}
+\subsection{All known subinterfaces}{Team11Engine\small{\refdefined{engines.Team11Engine}}, RandomEngine\small{\refdefined{engines.RandomEngine}}}
+\subsection{All classes known to implement interface}{Team11Engine\small{\refdefined{engines.Team11Engine}}, RandomEngine\small{\refdefined{engines.RandomEngine}}}
+\subsection{Method summary}{
+\begin{verse}
+{\bf computeMove(LaskerMorrisGameState)} Computes next state from a given non-final game state.\\
+\end{verse}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{computeMove(LaskerMorrisGameState)}
+{\bf  computeMove}\\
+\begin{lstlisting}[frame=none]
+model.LaskerMorrisGameState computeMove(model.LaskerMorrisGameState state)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Computes next state from a given non-final game state. Method computeMove should be "stoppable", i.e., when issued a TimeOutException or ExecutionException, the routine must return immediately. See random engine implementation for an example of how to deal with this issue.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{state} -- is the game state to move from}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the computed next state. 
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{engines.RandomEngine}\index{RandomEngine}Class RandomEngine}{
+\vskip .1in 
+Engine implementing random moves.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class RandomEngine
+ extends java.lang.Object implements GameEngine\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf RandomEngine()} Default constructor\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf computeMove(LaskerMorrisGameState)} Computes move to take, according to random decision value.\\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{RandomEngine()}
+{\bf  RandomEngine}\\
+\begin{lstlisting}[frame=none]
+public RandomEngine()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Default constructor
+}
+\end{itemize}
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{computeMove(LaskerMorrisGameState)}
+{\bf  computeMove}\\
+\begin{lstlisting}[frame=none]
+public model.LaskerMorrisGameState computeMove(model.LaskerMorrisGameState state)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Computes move to take, according to random decision value.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{state} -- is the state from which to move.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the resulting state to move to, according to a random decision. 
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{engines.Team11Engine}\index{Team11Engine}Class Team11Engine}{
+\vskip .1in 
+Engine implementing random moves.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class Team11Engine
+ extends java.lang.Object implements GameEngine\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf Team11Engine()} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf computeMove(LaskerMorrisGameState)} For a given turn, compute the best possible play.\\
+{\bf miniMax(LaskerMorrisGameState, int, int, int)} For a given game state, a maximum depth of search, and alpha and beta values for alpha-beta pruning, calculate an optimal move.\\
+{\bf successorStates(LaskerMorrisGameState)} For a given game state, returns all the possible successor game states.\\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{Team11Engine()}
+{\bf  Team11Engine}\\
+\begin{lstlisting}[frame=none]
+public Team11Engine()\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{computeMove(LaskerMorrisGameState)}
+{\bf  computeMove}\\
+\begin{lstlisting}[frame=none]
+public model.LaskerMorrisGameState computeMove(model.LaskerMorrisGameState e)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+For a given turn, compute the best possible play.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{e} -- a game state.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the game state to be played in the given turn. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{miniMax(LaskerMorrisGameState, int, int, int)}
+{\bf  miniMax}\\
+\begin{lstlisting}[frame=none]
+public static int miniMax(model.LaskerMorrisGameState e,int maxDepth,int alpha,int beta)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+For a given game state, a maximum depth of search, and alpha and beta values for alpha-beta pruning, calculate an optimal move.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{e} -- a game state.}
+   \item{
+\texttt{maxDepth} -- the depth to which the game tree will be searched.}
+   \item{
+\texttt{alpha} -- for alpha-beta pruning optimization.}
+   \item{
+\texttt{beta} -- for alpha-beta pruning optimization.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+value for the best possible play up to the given depth. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{successorStates(LaskerMorrisGameState)}
+{\bf  successorStates}\\
+\begin{lstlisting}[frame=none]
+public static java.util.PriorityQueue successorStates(model.LaskerMorrisGameState e)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+For a given game state, returns all the possible successor game states.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{e} -- a game state.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+a priority queue (whose priority is given by the heuristic evaluator) containing all successor moves given e. 
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{engines.ThreadedRandomEngine}\index{ThreadedRandomEngine}Class ThreadedRandomEngine}{
+\vskip .1in 
+Class that runs a thread with a random engine.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class ThreadedRandomEngine
+ extends java.lang.Object implements java.lang.Runnable\end{lstlisting}
+\subsection{Field summary}{
+\begin{verse}
+{\bf result} Resulting move is left here\\
+\end{verse}
+}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf ThreadedRandomEngine(LaskerMorrisGameState)} Default constructor\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf run()} Runs a stoppable random engine.\\
+\end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{result}
+\label{engines.ThreadedRandomEngine.result}\texttt{public static model.LaskerMorrisGameState\ {\bf  result}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Resulting move is left here}
+\end{itemize}
+}
+\end{itemize}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{ThreadedRandomEngine(LaskerMorrisGameState)}
+{\bf  ThreadedRandomEngine}\\
+\begin{lstlisting}[frame=none]
+public ThreadedRandomEngine(model.LaskerMorrisGameState state)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Default constructor
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{state} -- is the source state to play from}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{run()}
+{\bf  run}\\
+\begin{lstlisting}[frame=none]
+public void run()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Runs a stoppable random engine.
+}
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{engines.ThreadedTeam11Engine}\index{ThreadedTeam11Engine}Class ThreadedTeam11Engine}{
+\vskip .1in 
+Class that runs a thread with a random engine.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class ThreadedTeam11Engine
+ extends java.lang.Object implements java.lang.Runnable\end{lstlisting}
+\subsection{Field summary}{
+\begin{verse}
+{\bf depth} \\
+{\bf result} Resulting move is left here\\
+\end{verse}
+}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf ThreadedTeam11Engine(LaskerMorrisGameState)} Default constructor\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf run()} Runs a stoppable random engine.\\
+\end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{result}
+\label{engines.ThreadedTeam11Engine.result}\texttt{public static model.LaskerMorrisGameState\ {\bf  result}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Resulting move is left here}
+\end{itemize}
+}
+\item{
+\index{depth}
+\label{engines.ThreadedTeam11Engine.depth}\texttt{public static int\ {\bf  depth}}
+}
+\end{itemize}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{ThreadedTeam11Engine(LaskerMorrisGameState)}
+{\bf  ThreadedTeam11Engine}\\
+\begin{lstlisting}[frame=none]
+public ThreadedTeam11Engine(model.LaskerMorrisGameState state)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Default constructor
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{state} -- is the source state to play from}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{run()}
+{\bf  run}\\
+\begin{lstlisting}[frame=none]
+public void run()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Runs a stoppable random engine.
+}
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+}
+\chapter{Package model}{
+\label{model}\hskip -.05in
+\hbox to \hsize{\textit{ Package Contents\hfil Page}}
+\vskip .13in
+\hbox{{\bf  Classes}}
+\entityintro{LaskerMorrisBoard}{model.LaskerMorrisBoard}{Represents static board information, such as adjacencies and the coordinates of all mills in the board.}
+\entityintro{LaskerMorrisGameState}{model.LaskerMorrisGameState}{Represents a board state of the Lasker Morris Game.}
+\vskip .1in
+\vskip .1in
+\section{\label{model.LaskerMorrisBoard}\index{LaskerMorrisBoard}Class LaskerMorrisBoard}{
+\vskip .1in 
+Represents static board information, such as adjacencies and the coordinates of all mills in the board. Since static board info may be accessible by different classes, the class is implemented using the Singleton Pattern.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class LaskerMorrisBoard
+ extends java.lang.Object\end{lstlisting}
+\subsection{Field summary}{
+\begin{verse}
+{\bf MAXSTONES} Maximum number of stones per player\\
+{\bf POSITIONS} Number of positions of the board.\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf getAdjacencies(int)} Returns the list of coordinates adjacent to a given coordinate\\
+{\bf getInstance()} Static method for obtaining singleton.\\
+{\bf getMills(int)} Returns the list of mills for a given position\\
+\end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{POSITIONS}
+\label{model.LaskerMorrisBoard.POSITIONS}\texttt{public static final int\ {\bf  POSITIONS}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Number of positions of the board. See the representation below.}
+\end{itemize}
+}
+\item{
+\index{MAXSTONES}
+\label{model.LaskerMorrisBoard.MAXSTONES}\texttt{public static final int\ {\bf  MAXSTONES}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Maximum number of stones per player}
+\end{itemize}
+}
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{getAdjacencies(int)}
+{\bf  getAdjacencies}\\
+\begin{lstlisting}[frame=none]
+public java.util.List getAdjacencies(int i)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the list of coordinates adjacent to a given coordinate
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{i} -- is the coordinate to query for adjacencies.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the list of coordinates adjacent to i. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getInstance()}
+{\bf  getInstance}\\
+\begin{lstlisting}[frame=none]
+public static LaskerMorrisBoard getInstance()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Static method for obtaining singleton.
+}
+\item{{\bf  Returns} -- 
+a reference to a Lasker Morris Board. The object is created on-demand and contains solely static information regarding the board. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getMills(int)}
+{\bf  getMills}\\
+\begin{lstlisting}[frame=none]
+public java.util.List getMills(int position)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the list of mills for a given position
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{position} -- }
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+ 
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{model.LaskerMorrisGameState}\index{LaskerMorrisGameState}Class LaskerMorrisGameState}{
+\vskip .1in 
+Represents a board state of the Lasker Morris Game. Contains most of the functionality of the game, including adjacency relations between positions, mills combinations, etc.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class LaskerMorrisGameState
+ extends java.lang.Object\end{lstlisting}
+\subsection{Field summary}{
+\begin{verse}
+{\bf BLACK} Constant to represent black stone.\\
+{\bf EMPTY} Constant to represent empty position in board.\\
+{\bf WHITE} Constant to represent white stone.\\
+\end{verse}
+}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf LaskerMorrisGameState()} Default constructor.\\
+{\bf LaskerMorrisGameState(boolean, int\lbrack \rbrack , int, int)} Constructor that receives turn and board contents.\\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf blackWins()} Indicates whether black won in current state.\\
+{\bf blockedAdversaryStones()} Computes the difference between the current state's number of blocked stones and the adversary's.\\
+{\bf boardToString()} Produces string representation of the board state.\\
+{\bf canMoveStone()} Checks whether a stone in the board can be moved.\\
+{\bf clone()} Creates a clone of a game state.\\
+{\bf closedMills()} Determines if a mill has been formed in the current game state.\\
+{\bf doubleMills()} Computes the difference between the current state's number of double mills and the adversary's NOTE: A double mill is two mills joint together by a stone present in both mills.\\
+{\bf estimatedValue()} Computes estimated value for current state.\\
+{\bf getNumberOfFreeAdjacent(int)} Returns the number of free adjacent positions to a given position in the board.\\
+{\bf getValue(int)} Returns value in specified position.\\
+{\bf isFinal()} Checks whether the current state is final, i.e., cannot continue playing\\
+{\bf isInMill(int)} Checks whether given position belongs to a mill.\\
+{\bf isMax()} Checks whether current state is max (max is if white plays).\\
+{\bf isOccupied(int)} Indicates whether a specified position is occupied or not.\\
+{\bf isValid()} Checks whether the current state is valid\\
+{\bf isValidPosition(int)} Checks whether a given position is a valid position\\
+{\bf isWhitesTurn()} Indicates whether white's play.\\
+{\bf maxValue()} Returns max possible value for estimations.\\
+{\bf minValue()} Returns min possible value for estimations.\\
+{\bf moveStone(int, Integer)} Moves a stone in the board.\\
+{\bf numberOfBlackStonesOnBoard()} Counts number of black stones on the board\\
+{\bf numberOfMills()} Computes the difference between the number of mills for a given game state.\\
+{\bf numberOfStones()} Computes the difference between the current state's number of stones and the adversary's.\\
+{\bf numberOfWhiteStonesOnBoard()} Counts number of white stones on the board\\
+{\bf putStone(int)} Sets a stone in the specified position, according to the player's turn.\\
+{\bf remainingBlackStones()} Remaining black stones to put on the board.\\
+{\bf remainingWhiteStones()} Remaining white stones to put in the board.\\
+{\bf removeStone(int)} Removes stone from given position\\
+{\bf setClosedMill(boolean)} True iff a mill was formed in the current game state.\\
+{\bf setWhitesTurn(boolean)} Sets the turn of the game.\\
+{\bf threeStonesConfiguration()} Computes the difference between the current state's number of three-stone configurations and the adversary's.\\
+{\bf toString()} Produces string representation of the state.\\
+{\bf twoStonesConfiguration()} Computes the difference between the current state's number of two-stone configurations and the adversary's.\\
+{\bf whiteWins()} Indicates whether white won in current state.\\
+{\bf winningConfiguration()} Determines if the current game state guarantees a win.\\
+\end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{EMPTY}
+\label{model.LaskerMorrisGameState.EMPTY}\texttt{public static final int\ {\bf  EMPTY}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Constant to represent empty position in board.}
+\end{itemize}
+}
+\item{
+\index{WHITE}
+\label{model.LaskerMorrisGameState.WHITE}\texttt{public static final int\ {\bf  WHITE}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Constant to represent white stone.}
+\end{itemize}
+}
+\item{
+\index{BLACK}
+\label{model.LaskerMorrisGameState.BLACK}\texttt{public static final int\ {\bf  BLACK}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Constant to represent black stone.}
+\end{itemize}
+}
+\end{itemize}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{LaskerMorrisGameState()}
+{\bf  LaskerMorrisGameState}\\
+\begin{lstlisting}[frame=none]
+public LaskerMorrisGameState()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Default constructor. Board empty, white plays.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{LaskerMorrisGameState(boolean, int\lbrack \rbrack , int, int)}
+{\bf  LaskerMorrisGameState}\\
+\begin{lstlisting}[frame=none]
+public LaskerMorrisGameState(boolean whitePlays,int[] board,int whiteStonesToPlay,int blackStonesToPlay)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Constructor that receives turn and board contents.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{whitePlays} -- indicates whether white plays.}
+   \item{
+\texttt{board} -- is the contents to set in the board.}
+   \item{
+\texttt{whiteStonesToPlay} -- is the number of white stones still remaining to be put.}
+   \item{
+\texttt{blackStonesToPlay} -- is the number of black stones still remaining to be put.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{blackWins()}
+{\bf  blackWins}\\
+\begin{lstlisting}[frame=none]
+public boolean blackWins()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Indicates whether black won in current state.
+}
+\item{{\bf  Returns} -- 
+true iff state is final and black wins. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{blockedAdversaryStones()}
+{\bf  blockedAdversaryStones}\\
+\begin{lstlisting}[frame=none]
+public int blockedAdversaryStones()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Computes the difference between the current state's number of blocked stones and the adversary's.
+}
+\item{{\bf  Returns} -- 
+the difference between the current state's number of blocked stones and the adversary's. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{boardToString()}
+{\bf  boardToString}\\
+\begin{lstlisting}[frame=none]
+public java.lang.String boardToString()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Produces string representation of the board state. It ignores the turn.
+}
+\item{{\bf  Returns} -- 
+a string representing the state of the board. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{canMoveStone()}
+{\bf  canMoveStone}\\
+\begin{lstlisting}[frame=none]
+public boolean canMoveStone()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks whether a stone in the board can be moved.
+}
+\item{{\bf  Returns} -- 
+true iff current player can move a stone in the board. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{clone()}
+{\bf  clone}\\
+\begin{lstlisting}[frame=none]
+public LaskerMorrisGameState clone()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates a clone of a game state.
+}
+\item{{\bf  Returns} -- 
+a clone object of the game state. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{closedMills()}
+{\bf  closedMills}\\
+\begin{lstlisting}[frame=none]
+public int closedMills()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Determines if a mill has been formed in the current game state.
+}
+\item{{\bf  Returns} -- 
+1 if a mill has been closed in the current game state or zero otherwhise. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{doubleMills()}
+{\bf  doubleMills}\\
+\begin{lstlisting}[frame=none]
+public int doubleMills()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Computes the difference between the current state's number of double mills and the adversary's NOTE: A double mill is two mills joint together by a stone present in both mills.
+}
+\item{{\bf  Returns} -- 
+the difference between the current state's number of double mills and the adversary's. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{estimatedValue()}
+{\bf  estimatedValue}\\
+\begin{lstlisting}[frame=none]
+public int estimatedValue()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Computes estimated value for current state. Idea taken from the following paper: http://www.dasconference.ro/papers/2008/B7.pdf
+}
+\item{{\bf  Returns} -- 
+an estimated value of the current state. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getNumberOfFreeAdjacent(int)}
+{\bf  getNumberOfFreeAdjacent}\\
+\begin{lstlisting}[frame=none]
+public int getNumberOfFreeAdjacent(int position)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the number of free adjacent positions to a given position in the board.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{position} -- is the position to query about.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the number of adjacent positions to position, which are free. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getValue(int)}
+{\bf  getValue}\\
+\begin{lstlisting}[frame=none]
+public int getValue(int position)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns value in specified position.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{position} -- is the position to query about.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+zero if position free, 1 if occupied by white stone, 2 if occupied by black stone. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isFinal()}
+{\bf  isFinal}\\
+\begin{lstlisting}[frame=none]
+public boolean isFinal()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks whether the current state is final, i.e., cannot continue playing
+}
+\item{{\bf  Returns} -- 
+true iff the state is final, arrived to a winner. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isInMill(int)}
+{\bf  isInMill}\\
+\begin{lstlisting}[frame=none]
+public boolean isInMill(int position)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks whether given position belongs to a mill.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{position} -- is the position to query.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+true iff position is in a mill. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isMax()}
+{\bf  isMax}\\
+\begin{lstlisting}[frame=none]
+public boolean isMax()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks whether current state is max (max is if white plays). Useful for minimax function.
+}
+\item{{\bf  Returns} -- 
+true iff white plays. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isOccupied(int)}
+{\bf  isOccupied}\\
+\begin{lstlisting}[frame=none]
+public boolean isOccupied(int position)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Indicates whether a specified position is occupied or not.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{position} -- is the position to query.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+true iff the position is occupied. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isValid()}
+{\bf  isValid}\\
+\begin{lstlisting}[frame=none]
+public boolean isValid()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks whether the current state is valid
+}
+\item{{\bf  Returns} -- 
+true iff the current state is valid. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isValidPosition(int)}
+{\bf  isValidPosition}\\
+\begin{lstlisting}[frame=none]
+public static boolean isValidPosition(int position)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks whether a given position is a valid position
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{position} -- is the position to query about}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+true iff the position is a valid position 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isWhitesTurn()}
+{\bf  isWhitesTurn}\\
+\begin{lstlisting}[frame=none]
+public boolean isWhitesTurn()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Indicates whether white's play.
+}
+\item{{\bf  Returns} -- 
+true iff it's white's turn. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{maxValue()}
+{\bf  maxValue}\\
+\begin{lstlisting}[frame=none]
+public static int maxValue()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns max possible value for estimations. Value returned by estimatedValue() must always be smaller than this value. Useful for minimax and minimax alpha beta.
+}
+\item{{\bf  Returns} -- 
+max possible value for estimations 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{minValue()}
+{\bf  minValue}\\
+\begin{lstlisting}[frame=none]
+public static int minValue()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns min possible value for estimations. Value returned by estimatedValue() must always be greater than this value. Useful for minimax and minimax alpha beta.
+}
+\item{{\bf  Returns} -- 
+min possible value for estimations 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{moveStone(int, Integer)}
+{\bf  moveStone}\\
+\begin{lstlisting}[frame=none]
+public void moveStone(int position,java.lang.Integer adjacent)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Moves a stone in the board.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{position} -- is the source position of the stone.}
+   \item{
+\texttt{adjacent} -- is the target position of the stone.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{numberOfBlackStonesOnBoard()}
+{\bf  numberOfBlackStonesOnBoard}\\
+\begin{lstlisting}[frame=none]
+public int numberOfBlackStonesOnBoard()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Counts number of black stones on the board
+}
+\item{{\bf  Returns} -- 
+number of black stones on the board. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{numberOfMills()}
+{\bf  numberOfMills}\\
+\begin{lstlisting}[frame=none]
+public int numberOfMills()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Computes the difference between the number of mills for a given game state.
+}
+\item{{\bf  Returns} -- 
+the difference between the number of mills for a given game state. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{numberOfStones()}
+{\bf  numberOfStones}\\
+\begin{lstlisting}[frame=none]
+public int numberOfStones()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Computes the difference between the current state's number of stones and the adversary's.
+}
+\item{{\bf  Returns} -- 
+the difference between the current state's number of stones and the adversary's. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{numberOfWhiteStonesOnBoard()}
+{\bf  numberOfWhiteStonesOnBoard}\\
+\begin{lstlisting}[frame=none]
+public int numberOfWhiteStonesOnBoard()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Counts number of white stones on the board
+}
+\item{{\bf  Returns} -- 
+number of white stones on the board. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{putStone(int)}
+{\bf  putStone}\\
+\begin{lstlisting}[frame=none]
+public void putStone(int position)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Sets a stone in the specified position, according to the player's turn.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{position} -- is the position where to set the stone.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{remainingBlackStones()}
+{\bf  remainingBlackStones}\\
+\begin{lstlisting}[frame=none]
+public int remainingBlackStones()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Remaining black stones to put on the board.
+}
+\item{{\bf  Returns} -- 
+the number of black stones that still can be put on the board. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{remainingWhiteStones()}
+{\bf  remainingWhiteStones}\\
+\begin{lstlisting}[frame=none]
+public int remainingWhiteStones()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Remaining white stones to put in the board.
+}
+\item{{\bf  Returns} -- 
+the number of white stones that still can be put in the board. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{removeStone(int)}
+{\bf  removeStone}\\
+\begin{lstlisting}[frame=none]
+public void removeStone(int pos)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Removes stone from given position
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{pos} -- is the position from which to remove a stone}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{setClosedMill(boolean)}
+{\bf  setClosedMill}\\
+\begin{lstlisting}[frame=none]
+public void setClosedMill(boolean closeMill)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+True iff a mill was formed in the current game state.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{setWhitesTurn(boolean)}
+{\bf  setWhitesTurn}\\
+\begin{lstlisting}[frame=none]
+public void setWhitesTurn(boolean whitesTurn)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Sets the turn of the game.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{indicates} -- whether is white's turn or not.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{threeStonesConfiguration()}
+{\bf  threeStonesConfiguration}\\
+\begin{lstlisting}[frame=none]
+public int threeStonesConfiguration()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Computes the difference between the current state's number of three-stone configurations and the adversary's. NOTE: A three stone configuration is two two-stone configurations joint together by a stone present in both two-stone configurations.
+}
+\item{{\bf  Returns} -- 
+the difference between the current state's number of three-stone configurations and the adversary's. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{toString()}
+{\bf  toString}\\
+\begin{lstlisting}[frame=none]
+public java.lang.String toString()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Produces string representation of the state. Prints board, turn, remaining stones per player.
+}
+\item{{\bf  Returns} -- 
+a string representing the state of the game. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{twoStonesConfiguration()}
+{\bf  twoStonesConfiguration}\\
+\begin{lstlisting}[frame=none]
+public int twoStonesConfiguration()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Computes the difference between the current state's number of two-stone configurations and the adversary's. NOTE: A two stone configuration is two aligned stones (both either white or black) with an empty third position available to form a mill.
+}
+\item{{\bf  Returns} -- 
+the difference between the current state's number of two-stone configurations and the adversary's. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{whiteWins()}
+{\bf  whiteWins}\\
+\begin{lstlisting}[frame=none]
+public boolean whiteWins()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Indicates whether white won in current state.
+}
+\item{{\bf  Returns} -- 
+true iff state is final and white wins 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{winningConfiguration()}
+{\bf  winningConfiguration}\\
+\begin{lstlisting}[frame=none]
+public int winningConfiguration()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Determines if the current game state guarantees a win.
+}
+\item{{\bf  Returns} -- 
+0 if it doesn't guarantee a win, 1 or -1 if it guarantees a win for either the white or black stones. 
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+}
+\chapter{Package runners}{
+\label{runners}\hskip -.05in
+\hbox to \hsize{\textit{ Package Contents\hfil Page}}
+\vskip .13in
+\hbox{{\bf  Classes}}
+\entityintro{RandomGameWithTimeout}{runners.RandomGameWithTimeout}{A sample application where white plays black using random engines.}
+\entityintro{Team11GameWithTimeout}{runners.Team11GameWithTimeout}{A sample application where white plays black using random engines.}
+\vskip .1in
+\vskip .1in
+\section{\label{runners.RandomGameWithTimeout}\index{RandomGameWithTimeout}Class RandomGameWithTimeout}{
+\vskip .1in 
+A sample application where white plays black using random engines.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class RandomGameWithTimeout
+ extends java.lang.Object\end{lstlisting}
+\subsection{Field summary}{
+\begin{verse}
+{\bf MAXMOVES} Max number of total moves before considering a match a draw.\\
+{\bf TIMEOUT} Timeout in seconds for each player's timeout.\\
+\end{verse}
+}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf RandomGameWithTimeout()} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf main(String\lbrack \rbrack )} Creates a game where whites play blacks using random engines for both players.\\
+\end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{MAXMOVES}
+\label{runners.RandomGameWithTimeout.MAXMOVES}\texttt{public static final int\ {\bf  MAXMOVES}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Max number of total moves before considering a match a draw.}
+\end{itemize}
+}
+\item{
+\index{TIMEOUT}
+\label{runners.RandomGameWithTimeout.TIMEOUT}\texttt{public static final int\ {\bf  TIMEOUT}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Timeout in seconds for each player's timeout.}
+\end{itemize}
+}
+\end{itemize}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{RandomGameWithTimeout()}
+{\bf  RandomGameWithTimeout}\\
+\begin{lstlisting}[frame=none]
+public RandomGameWithTimeout()\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{main(String\lbrack \rbrack )}
+{\bf  main}\\
+\begin{lstlisting}[frame=none]
+public static void main(java.lang.String[] args)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates a game where whites play blacks using random engines for both players. Game is considered a draw if MAXMOVES total moves are reached without a winner.
+}
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{runners.Team11GameWithTimeout}\index{Team11GameWithTimeout}Class Team11GameWithTimeout}{
+\vskip .1in 
+A sample application where white plays black using random engines.\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class Team11GameWithTimeout
+ extends java.lang.Object\end{lstlisting}
+\subsection{Field summary}{
+\begin{verse}
+{\bf MAXMOVES} Max number of total moves before considering a match a draw.\\
+{\bf TIMEOUT} Timeout in seconds for each player's timeout.\\
+\end{verse}
+}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf Team11GameWithTimeout()} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf main(String\lbrack \rbrack )} Creates a game where whites play blacks using random engines for both players.\\
+\end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{MAXMOVES}
+\label{runners.Team11GameWithTimeout.MAXMOVES}\texttt{public static final int\ {\bf  MAXMOVES}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Max number of total moves before considering a match a draw.}
+\end{itemize}
+}
+\item{
+\index{TIMEOUT}
+\label{runners.Team11GameWithTimeout.TIMEOUT}\texttt{public static final int\ {\bf  TIMEOUT}}
+\begin{itemize}
+\item{\vskip -.9ex 
+Timeout in seconds for each player's timeout.}
+\end{itemize}
+}
+\end{itemize}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{Team11GameWithTimeout()}
+{\bf  Team11GameWithTimeout}\\
+\begin{lstlisting}[frame=none]
+public Team11GameWithTimeout()\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{main(String\lbrack \rbrack )}
+{\bf  main}\\
+\begin{lstlisting}[frame=none]
+public static void main(java.lang.String[] args)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates a game where whites play blacks using random engines for both players. Game is considered a draw if MAXMOVES total moves are reached without a winner.
+}
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+}
+\printindex
+\end{document}
